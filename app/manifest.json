@@ -1,0 +1,12 @@
+{
+  "name": "miilClient",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/static/icon.png",
+      "sizes": "300x300",
+      "type": "image/png"
+    }
+  ],
+  "display": "minimal-ui"
+}
