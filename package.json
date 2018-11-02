@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "miil PWA Client",
   "scripts": {
+    "heroku-postbuild": "unzip ./app/static/lib/polymer_components_055.zip -d ./app/static/lib/",
+    "build": "",
     "start": "node -r esm server.mjs"
   },
   "author": "daiiz",
