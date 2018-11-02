@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+Copyright 2013 The Polymer Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+<html>
+ <head>
+  <title>
+   core-style
+  </title>
+  <script src="../webcomponentsjs/webcomponents.js">
+  </script>
+  <link href="elements.html" rel="import">
+   <link href="my-theme.html" rel="import">
+   </link>
+  </link>
+ </head>
+ <body fullbleed="" layout="" unresolved="" vertical="">
+  <core-style ref="main">
+  </core-style>
+  <template is="auto-binding">
+   <my-toolbar>
+    <span flex="">
+     core-style
+    </span>
+    <input type="color" value="{{g.theme.colorOne}}">
+     <input type="color" value="{{g.theme.colorTwo}}">
+      <input type="color" value="{{g.theme.colorThree}}">
+       <input max="8" min="1" type="range" value="{{g.columns}}">
+        <button>
+         A button
+        </button>
+       </input>
+      </input>
+     </input>
+    </input>
+   </my-toolbar>
+   <section flex="" horizontal="" layout="" wrap="">
+    <template repeat="{{item in items}}">
+     <my-panel>
+      {{item}}
+     </my-panel>
+    </template>
+   </section>
+  </template>
+  <script src="demo.html.0.js">
+  </script>
+ </body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "griddle-cards",
+  "description": "",
+  "homepage": "https://github.com/griddles-ui-card/griddle-cards",
+  "keywords": [],
+  "author": "daiz",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.5.5",
+    "paper-elements": "Polymer/paper-elements#^0.5.5",
+    "core-elements": "Polymer/paper-elements#^0.5.5"
+  },
+  "version": "0.4.3",
+  "_release": "0.4.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.4.3",
+    "commit": "09dbc4f208fc284e51168fb18c039c11f39e47c2"
+  },
+  "_source": "git://github.com/griddles-ui-card/griddle-cards.git",
+  "_target": "^0.4.3",
+  "_originalSource": "griddles-ui-card/griddle-cards"
+}

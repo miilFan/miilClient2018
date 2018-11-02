@@ -1,0 +1,9 @@
+html, body {
+  height: 100vh;
+  margin: 0;
+  background-color: #e9e7e4;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+miil-client {
+  height: 100vh;
+}

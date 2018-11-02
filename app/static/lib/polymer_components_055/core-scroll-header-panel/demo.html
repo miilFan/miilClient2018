@@ -1,0 +1,101 @@
+<!DOCTYPE doctype html>
+<!--
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+ <head>
+  <title>
+   core-scroll-header-panel
+  </title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
+   <meta content="yes" name="mobile-web-app-capable">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+     <script src="../webcomponentsjs/webcomponents.js">
+     </script>
+     <link href="core-scroll-header-panel.html" rel="import">
+      <link href="demos/sample-content.html" rel="import">
+       <link href="../core-toolbar/core-toolbar.html" rel="import">
+        <link href="../core-icon-button/core-icon-button.html" rel="import">
+         <style shim-shadowdom="">
+          html, body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      color: #333;
+    }
+
+    core-scroll-header-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: #eee;
+    }
+
+    /* background for toolbar when it is at its full size */
+    core-scroll-header-panel::shadow #headerBg {
+      background-image: url(demos/images/bg9.jpg);
+    }
+
+    /* background for toolbar when it is condensed */
+    core-scroll-header-panel::shadow #condensedHeaderBg {
+      background-color: #f4b400;
+    }
+
+    core-toolbar {
+      color: #f1f1f1;
+      fill: #f1f1f1;
+      background-color: transparent;
+    }
+
+    .title {
+      -webkit-transform-origin: 0;
+      transform-origin: 0;
+      font-size: 40px;
+    }
+
+    .content {
+      padding: 8px;
+    }
+         </style>
+        </link>
+       </link>
+      </link>
+     </link>
+    </meta>
+   </meta>
+  </meta>
+ </head>
+ <body unresolved="">
+  <core-scroll-header-panel condenses="">
+   <core-toolbar class="tall">
+    <core-icon-button icon="arrow-back">
+    </core-icon-button>
+    <div flex="">
+    </div>
+    <core-icon-button icon="search">
+    </core-icon-button>
+    <core-icon-button icon="more-vert">
+    </core-icon-button>
+    <div class="bottom indent title">
+     Title
+    </div>
+   </core-toolbar>
+   <div class="content">
+    <sample-content size="100">
+    </sample-content>
+   </div>
+  </core-scroll-header-panel>
+  <script src="demo.html.0.js">
+  </script>
+ </body>
+</html>

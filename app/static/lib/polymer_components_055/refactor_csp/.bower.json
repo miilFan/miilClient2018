@@ -1,0 +1,13 @@
+{
+  "name": "refactor_csp",
+  "_cacheHeaders": {
+    "ETag": "\"977e69f23a658ef8d0d6173af1035a3a6bb859ca\"",
+    "Content-Length": "3662",
+    "Content-Type": "text/plain; charset=utf-8"
+  },
+  "_release": "e-tag:977e69f23",
+  "main": "index.py",
+  "_source": "https://raw.githubusercontent.com/daiz713/RefactorForCSP/master/refactor_csp.py",
+  "_target": "*",
+  "_originalSource": "https://raw.githubusercontent.com/daiz713/RefactorForCSP/master/refactor_csp.py"
+}

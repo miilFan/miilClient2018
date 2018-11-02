@@ -1,0 +1,154 @@
+<!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!DOCTYPE doctype html>
+<html>
+ <head>
+  <title>
+   paper-slider
+  </title>
+  <meta content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes" name="viewport">
+   <meta content="yes" name="mobile-web-app-capable">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+     <script src="../webcomponentsjs/webcomponents.js">
+     </script>
+     <link href="paper-slider.html" rel="import">
+      <link href="../font-roboto/roboto.html" rel="import">
+       <style shim-shadowdom="">
+        body {
+      font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+      margin: 0;
+      padding: 24px;
+    }
+    
+    paper-slider {
+      width: 100%;
+    }
+    
+    section {
+      max-width: 1000px;
+      padding: 20px 0;
+      background-color: #f0f0f0;
+    }
+    
+    section > div {
+      padding: 14px;
+    }
+    
+    .yellow-slider paper-slider::shadow #sliderKnobInner,
+    .yellow-slider paper-slider::shadow #sliderBar::shadow #activeProgress {
+      background-color: #f4b400;
+    }
+    
+    .green-slider paper-slider::shadow #sliderKnobInner,
+    .green-slider paper-slider::shadow #sliderKnobInner::before,
+    .green-slider paper-slider::shadow #sliderBar::shadow #activeProgress {
+      background-color: #0f9d58;
+    }
+    
+    #ratingsLabel {
+      padding-left: 12px;
+      color: #a0a0a0;
+    }
+       </style>
+      </link>
+     </link>
+    </meta>
+   </meta>
+  </meta>
+ </head>
+ <body unresolved="">
+  <section class="yellow-slider">
+   <div>
+    Music, video, games &amp; other media
+   </div>
+   <paper-slider value="50">
+   </paper-slider>
+   <br>
+    <br>
+     <div>
+      Notifications
+     </div>
+     <paper-slider value="50">
+     </paper-slider>
+     <br>
+      <br>
+       <div>
+        Alarms
+       </div>
+       <paper-slider value="80">
+       </paper-slider>
+      </br>
+     </br>
+    </br>
+   </br>
+  </section>
+  <br>
+   <section>
+    <div center="" horizontal="" layout="">
+     <div>
+      R
+     </div>
+     <paper-slider editable="" max="255" value="23">
+     </paper-slider>
+    </div>
+    <br>
+     <br>
+      <div center="" horizontal="" layout="">
+       <div>
+        G
+       </div>
+       <paper-slider editable="" max="255" value="183">
+       </paper-slider>
+      </div>
+      <br>
+       <br>
+        <div center="" horizontal="" layout="">
+         <div>
+          B
+         </div>
+         <paper-slider editable="" max="255" value="211">
+         </paper-slider>
+        </div>
+       </br>
+      </br>
+     </br>
+    </br>
+   </section>
+   <br>
+    <section class="green-slider">
+     <div>
+      Brightness
+     </div>
+     <br>
+      <paper-slider pin="" value="50">
+      </paper-slider>
+     </br>
+    </section>
+    <br>
+     <section class="green-slider">
+      <div>
+       <span>
+        Ratings
+       </span>
+       <span id="ratingsLabel">
+       </span>
+      </div>
+      <br>
+       <paper-slider id="ratings" max="10" pin="" snaps="" step="1" value="5">
+       </paper-slider>
+      </br>
+     </section>
+     <script src="demo.html.0.js">
+     </script>
+    </br>
+   </br>
+  </br>
+ </body>
+</html>

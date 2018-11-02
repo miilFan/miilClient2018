@@ -1,0 +1,153 @@
+<!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>
+   core-overlay
+  </title>
+  <meta content="width=device-width, user-scalable=no" name="viewport">
+   <script src="../webcomponentsjs/webcomponents.js">
+   </script>
+   <link href="../core-transition/core-transition-css.html" rel="import">
+    <link href="core-overlay.html" rel="import">
+     <style>
+      body {
+			margin: 0;
+		}
+
+		section {
+			padding: 24px;
+		}
+     </style>
+    </link>
+   </link>
+  </meta>
+ </head>
+ <body unresolved="">
+  <section>
+   <x-container>
+   </x-container>
+  </section>
+  <!-- a simple dialog element made with core-overlay -->
+  <polymer-element attributes="opened autoCloseDisabled" name="x-dialog">
+   <template>
+    <style>
+     :host {
+				box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 13px;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				overflow: hidden;
+				background: white;
+				padding:30px 42px;
+				outline: 1px solid rgba(0,0,0,0.2);
+				box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+			}
+    </style>
+    <core-overlay autoclosedisabled="{{autoCloseDisabled}}" backdrop="" id="overlay" layered="" opened="{{opened}}" transition="core-transition-center">
+    </core-overlay>
+    <content>
+    </content>
+   </template>
+   <script src="demo.html.0.js">
+   </script>
+  </polymer-element>
+  <!-- an element that uses the x-dialog element and core-overlay -->
+  <polymer-element name="x-container">
+   <template>
+    <x-dialog class="dialog" id="dialog">
+     <!-- place all overlay styles inside the overlay target -->
+     <style no-shim="">
+      .dialog {
+					box-sizing: border-box;
+					-moz-box-sizing: border-box;
+					font-family: Arial, Helvetica, sans-serif;
+					font-size: 13px;
+					-webkit-user-select: none;
+					-moz-user-select: none;
+					overflow: hidden;
+					background: white;
+					padding:30px 42px;
+					outline: 1px solid rgba(0,0,0,0.2);
+					box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+				}
+
+				#dialog {
+					width: 500px;
+				}
+     </style>
+     <h2>
+      Dialog
+     </h2>
+     <div>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla sapien sed enim sollicitudin laoreet. Suspendisse suscipit, metus ac volutpat sodales, libero magna semper lacus, molestie fringilla massa orci ut arcu. Nullam sodales urna sit amet odio vehicula mattis.
+     </div>
+     <br>
+      <br>
+       <div>
+        Ut aliquam vulputate congue. Vestibulum pretium pretium nulla quis sollicitudin. Praesent lacinia congue erat nec mattis. Fusce commodo lacus est. Duis turpis eros, ultrices sed aliquet non, blandit egestas velit. Integer a augue nec lorem tristique hendrerit. Curabitur imperdiet risus id enim bibendum vestibulum. Integer id magna at arcu faucibus fermentum vel a augue. Sed fringilla venenatis dolor, in blandit magna molestie luctus. Vestibulum dignissim posuere ultrices. Aenean urna nisl, tincidunt vitae iaculis ut, pharetra nec eros.
+       </div>
+       <br>
+        <br>
+         <div>
+          <input autofocus="" on-input="{{inputHandler}}" placeholder="say something..."/>
+          <br>
+           I agree with this wholeheartedly.
+           <core-overlay backdrop="" class="dialog" id="confirmation" layered="" transition="core-transition-top">
+            <!-- place all overlay styles inside the overlay target -->
+            <style no-shim="">
+             .dialog {
+							box-sizing: border-box;
+							-moz-box-sizing: border-box;
+							font-family: Arial, Helvetica, sans-serif;
+							font-size: 13px;
+							-webkit-user-select: none;
+							-moz-user-select: none;
+							overflow: hidden;
+							background: white;
+							padding:30px 42px;
+							outline: 1px solid rgba(0,0,0,0.2);
+							box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+						}
+
+						#confirmation {
+							box-sizing: border-box;
+							text-align: center;
+							width: 150px;
+						}
+            </style>
+            Thank you.
+           </core-overlay>
+          </br>
+         </div>
+         <br>
+          <br>
+           <button core-overlay-toggle="">
+            OK
+           </button>
+          </br>
+         </br>
+        </br>
+       </br>
+      </br>
+     </br>
+    </x-dialog>
+    <button on-tap="{{tapHandler}}">
+     Toggle Dialog
+    </button>
+   </template>
+   <script src="demo.html.1.js">
+   </script>
+  </polymer-element>
+ </body>
+</html>

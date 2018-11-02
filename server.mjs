@@ -7,7 +7,7 @@ const PWD = process.env.PWD
 
 const app = polka()
 app
-  .use(serveStatic(path.resolve(PWD, 'src')))
+  .use(serveStatic(path.resolve(PWD, 'app')))
   .listen(PORT, _ => {
     console.log(`> Running on http://localhost:${PORT}`)
   })

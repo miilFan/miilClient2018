@@ -1,0 +1,14 @@
+{
+  "name": "appStorage",
+  "homepage": "https://github.com/daiz713/appStorage",
+  "version": "0.2.0",
+  "_release": "0.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.0",
+    "commit": "fc0747751e846b3181e8b5b1c9fb87e6edeed9b0"
+  },
+  "_source": "git://github.com/daiz713/appStorage.git",
+  "_target": "^0.2.0",
+  "_originalSource": "daiz713/appStorage"
+}

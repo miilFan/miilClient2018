@@ -1,0 +1,78 @@
+<!--
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!--
+`paper-toggle-button` provides a ON/OFF switch that user can toggle the state
+by tapping or by dragging the swtich.
+
+Example:
+
+    <paper-toggle-button></paper-toggle-button>
+
+Styling toggle button:
+
+To change the toggle color:
+
+    paper-toggle-button::shadow .toggle {
+      background-color: #9c27b0;
+    }
+
+To change the ink color:
+    
+    paper-toggle-button::shadow .toggle-ink {
+      color: #009688;
+    }
+
+To change the checked toggle color:
+
+    paper-toggle-button::shadow [checked] .toggle {
+      background-color: #4285f4;
+    }
+
+To change the checked ink color:
+
+    paper-toggle-button::shadow [checked] .toggle-ink {
+      color: #4285f4;
+    }
+
+To change the toggle bar and toggle button colors separately:
+
+    paper-toggle-button::shadow .toggle-bar {
+      background-color: #5677fc;
+    }
+
+    paper-toggle-button::shadow .toggle-button {
+      background-color: #9c27b0;
+    }
+
+@group Paper Elements
+@element paper-toggle-button
+@homepage github.io
+-->
+<link href="../paper-radio-button/paper-radio-button.html" rel="import">
+ <link href="../core-a11y-keys/core-a11y-keys.html" rel="import">
+  <polymer-element aria-pressed="false" attributes="checked disabled" name="paper-toggle-button" role="button" tabindex="0">
+   <template>
+    <link href="paper-toggle-button.css" rel="stylesheet">
+     <core-a11y-keys keys="space" on-keys-pressed="{{tap}}" target="{{}}">
+     </core-a11y-keys>
+     <div checked?="{{checked}}" disabled?="{{disabled}}" id="toggleContainer">
+      <div class="toggle toggle-bar" id="toggleBar">
+      </div>
+      <div class="toggle toggle-button" id="toggleButton">
+       <paper-ripple class="toggle-ink circle" id="ink">
+       </paper-ripple>
+      </div>
+     </div>
+    </link>
+   </template>
+   <script src="paper-toggle-button.html.0.js">
+   </script>
+  </polymer-element>
+ </link>
+</link>

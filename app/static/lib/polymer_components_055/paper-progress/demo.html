@@ -1,0 +1,101 @@
+<!--
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!DOCTYPE doctype html>
+<html>
+ <head>
+  <title>
+   paper-progress
+  </title>
+  <meta content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes" name="viewport">
+   <meta content="yes" name="mobile-web-app-capable">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+     <script src="../webcomponentsjs/webcomponents.js">
+     </script>
+     <link href="paper-progress.html" rel="import">
+      <link href="../paper-button/paper-button.html" rel="import">
+       <style shim-shadowdom="">
+        body {
+      font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+      margin: 0;
+      padding: 24px;
+    }
+    
+    paper-progress {
+      display: block;
+      width: 100%;
+      padding: 25px 0;
+    }
+    
+    paper-progress.pink::shadow #activeProgress {
+      background-color: #e91e63;
+    }
+    
+    paper-progress.pink::shadow #secondaryProgress {
+      background-color: #f8bbd0;
+    }
+       </style>
+      </link>
+     </link>
+    </meta>
+   </meta>
+  </meta>
+ </head>
+ <body unresolved="">
+  <paper-progress>
+  </paper-progress>
+  <paper-button onclick="startProgress();" raised="">
+   Start
+  </paper-button>
+  <br>
+   <br>
+    <br>
+     <paper-progress>
+     </paper-progress>
+     <br>
+      <paper-progress value="40">
+      </paper-progress>
+      <br>
+       <paper-progress max="1000" min="100" value="800">
+       </paper-progress>
+       <br>
+        <paper-progress secondaryprogress="80" value="40">
+        </paper-progress>
+        <br>
+         <paper-progress max="200" value="200">
+         </paper-progress>
+         <br>
+          <paper-progress indeterminate="">
+          </paper-progress>
+          <br>
+           <paper-progress class="pink" value="80">
+           </paper-progress>
+           <br>
+            <paper-progress class="pink" secondaryprogress="80" value="40">
+            </paper-progress>
+            <br>
+             <paper-progress class="pink" indeterminate="">
+             </paper-progress>
+             <br>
+              <script src="demo.html.0.js">
+              </script>
+             </br>
+            </br>
+           </br>
+          </br>
+         </br>
+        </br>
+       </br>
+      </br>
+     </br>
+    </br>
+   </br>
+  </br>
+ </body>
+</html>

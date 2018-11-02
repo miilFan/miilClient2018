@@ -1,0 +1,88 @@
+<!--
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!--
+`sampler-scaffold` provides a responsive layout for elements sampler.
+
+Exampler:
+
+    <sampler-scaffold label="HTML Input Elements">
+
+      <core-item label="String" url="demos/string.html"></core-item>
+      <core-item label="Checkbox" url="demos/checkbox.html"></core-item>
+      <core-item label="Radio" url="demos/radio.html"></core-item>
+      <core-item label="Range" url="demos/range.html"></core-item>
+      <core-item label="Color" url="demos/color.html"></core-item>
+    
+    </sampler-scaffold>
+
+Use `label` to set the sampler label and `responsiveWidth` to change the layout 
+of the scaffold.
+
+@element sampler-scaffold
+@homepage github.io
+-->
+<link href="../core-toolbar/core-toolbar.html" rel="import">
+ <link href="../core-drawer-panel/core-drawer-panel.html" rel="import">
+  <link href="../core-header-panel/core-header-panel.html" rel="import">
+   <link href="../core-item/core-item.html" rel="import">
+    <link href="../core-menu/core-menu.html" rel="import">
+     <link href="../core-menu/core-submenu.html" rel="import">
+      <link href="../core-icon-button/core-icon-button.html" rel="import">
+       <polymer-element attributes="label responsiveWidth" name="sampler-scaffold">
+        <template>
+         <link href="sampler-scaffold.css" rel="stylesheet">
+          <core-drawer-panel drawerwidth="320px" id="drawerPanel" narrow="{{narrow}}" responsivewidth="{{responsiveWidth}}">
+           <core-header-panel id="mainHeaderPanel" main="" mode="{{narrow ? 'waterfall' : 'cover'}}" shadow="">
+            <core-toolbar class="{{ {'medium-tall' : !narrow} | tokenList }}">
+             <content on-tap="{{togglePanel}}" select=".menuButton">
+              <core-icon-button class="menuButton fallback" icon="menu">
+              </core-icon-button>
+             </content>
+             <div hidden?="{{!narrow}}">
+              {{item.label}}
+             </div>
+             <content on-tap="{{viewSourceAction}}" select=".sourceButton">
+              <core-icon-button class="sourceButton fallback" icon="launch">
+              </core-icon-button>
+             </content>
+            </core-toolbar>
+            <div hidden?="{{!item}}" id="card" on-transitionend="{{cardTransitionDone}}">
+             <div class="element-label" hidden?="{{narrow}}">
+              {{item.label}}
+             </div>
+             <div id="frameContainer">
+              <iframe id="frame" on-load="{{frameLoaded}}">
+              </iframe>
+             </div>
+            </div>
+           </core-header-panel>
+           <core-header-panel drawer="">
+            <core-toolbar class="{{ {'medium-tall' : !narrow} | tokenList }}">
+             <div class="bottom main-label fit">
+              {{label}}
+             </div>
+            </core-toolbar>
+            <core-menu id="menu" on-core-select="{{menuSelect}}">
+             <content>
+             </content>
+            </core-menu>
+           </core-header-panel>
+          </core-drawer-panel>
+         </link>
+        </template>
+        <script src="sampler-scaffold.html.0.js">
+        </script>
+       </polymer-element>
+      </link>
+     </link>
+    </link>
+   </link>
+  </link>
+ </link>
+</link>

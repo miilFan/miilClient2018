@@ -1,0 +1,81 @@
+<!--
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE
+The complete set of authors may be found at http://polymer.github.io/AUTHORS
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS
+-->
+<!--
+Use to create nested menus inside of `core-menu` elements.
+
+    <core-menu selected="0">
+    
+      <core-submenu icon="settings" label="Topics">
+        <core-item label="Topic 1"></core-item>
+        <core-item label="Topic 2"></core-item>
+      </core-submenu>
+      
+      <core-submenu icon="settings" label="Favorites">
+        <core-item label="Favorite 1"></core-item>
+        <core-item label="Favorite 2"></core-item>
+        <core-item label="Favorite 3"></core-item>
+      </core-submenu>
+      
+    </core-menu>
+    
+There is a margin set on the submenu to indent the items.
+You can override the margin by doing:
+
+    core-submenu::shadow #submenu {
+      margin-left: 20px;
+    }
+
+To style the item for the submenu, do something like this:
+
+    core-submenu::shadow > #submenuItem {
+      color: blue;
+    }
+    
+To style all the `core-item`s in the light DOM:
+
+    polyfill-next-selector { content: 'core-submenu > #submenu > core-item'; }
+    core-submenu > core-item {
+      color: red;
+    }
+    
+The above will style `Topic1` and `Topic2` to have font color red.
+
+    <core-submenu icon="settings" label="Topics">
+      <core-item label="Topic1"></core-item>
+      <core-item label="Topic2"></core-item>
+    </core-submenu>
+    
+@group Polymer Core Elements
+@element core-submenu
+@extends core-item
+-->
+<link href="../core-item/core-item.html" rel="import">
+ <link href="../core-menu/core-menu.html" rel="import">
+  <link href="../core-collapse/core-collapse.html" rel="import">
+   <polymer-element attributes="selected selectedItem selectedAttribute label icon src valueattr" name="core-submenu">
+    <template>
+     <link href="core-submenu.css" rel="stylesheet">
+      <core-item class="{{ {'core-selected' : active} | tokenList}}" icon="{{icon}}" id="submenuItem" label="{{label}}" on-tap="{{activate}}" src="{{src}}">
+       <content select=".item-content">
+       </content>
+      </core-item>
+      <core-menu id="submenu" selected="{{selected}}" selectedattribute="{{selectedAttribute}}" selecteditem="{{selectedItem}}" valueattr="{{valueattr}}">
+       <content>
+       </content>
+      </core-menu>
+      <core-collapse opened="{{opened}}" target="{{$.submenu}}">
+      </core-collapse>
+     </link>
+    </template>
+    <script src="core-submenu.html.0.js">
+    </script>
+   </polymer-element>
+  </link>
+ </link>
+</link>

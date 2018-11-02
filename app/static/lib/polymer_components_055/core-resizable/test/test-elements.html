@@ -1,0 +1,28 @@
+<polymer-element name="core-resizer-parent">
+ <script src="test-elements.html.0.js">
+ </script>
+</polymer-element>
+<polymer-element extends="core-resizer-parent" name="core-resizer-parent-filtered">
+ <script src="test-elements.html.1.js">
+ </script>
+</polymer-element>
+<polymer-element extends="core-resizer-parent" name="core-resizer-peer">
+ <script src="test-elements.html.2.js">
+ </script>
+</polymer-element>
+<polymer-element extends="core-resizer-parent-filtered" name="core-resizer-peer-filtered">
+ <script src="test-elements.html.3.js">
+ </script>
+</polymer-element>
+<polymer-element name="core-resizable">
+ <script src="test-elements.html.4.js">
+ </script>
+</polymer-element>
+<polymer-element name="core-resizable-in-shadow" noscript="">
+ <template>
+  <div>
+   <core-resizable id="resizable">
+   </core-resizable>
+  </div>
+ </template>
+</polymer-element>

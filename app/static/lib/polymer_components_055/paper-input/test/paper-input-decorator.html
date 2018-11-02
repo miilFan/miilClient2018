@@ -1,0 +1,107 @@
+<!DOCTYPE doctype html>
+<!--
+Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+ <head>
+  <meta charset="utf-8">
+   <title>
+    paper-input-decorator tests
+   </title>
+   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
+    <script src="../../webcomponentsjs/webcomponents.js">
+    </script>
+    <script src="../../web-component-tester/browser.js">
+    </script>
+    <script src="../../polymer-gestures/test/js/fake.js">
+    </script>
+    <script src="util.js">
+    </script>
+    <link href="../../core-input/core-input.html" rel="import">
+     <link href="../paper-input-decorator.html" rel="import">
+      <link href="../paper-autogrow-textarea.html" rel="import">
+       <link href="../paper-char-counter.html" rel="import">
+        <style>
+         paper-input-decorator {
+      width: 400px;
+    }
+        </style>
+       </link>
+      </link>
+     </link>
+    </link>
+   </meta>
+  </meta>
+ </head>
+ <body>
+  <template id="default">
+   <paper-input-decorator label="label">
+    <input is="core-input">
+    </input>
+   </paper-input-decorator>
+   <br>
+   </br>
+  </template>
+  <template id="floating-label">
+   <paper-input-decorator floatinglabel="" label="floating label">
+    <input is="core-input">
+    </input>
+   </paper-input-decorator>
+   <br>
+   </br>
+  </template>
+  <template id="label-visible-false">
+   <paper-input-decorator label="labelVisible = false" labelvisible="false">
+    <input is="core-input">
+    </input>
+   </paper-input-decorator>
+   <br>
+   </br>
+  </template>
+  <template id="floating-label-filled">
+   <paper-input-decorator floatinglabel="" label="input">
+    <input is="core-input" value="prefilled">
+    </input>
+   </paper-input-decorator>
+  </template>
+  <template id="no-input">
+   <paper-input-decorator label="no input">
+   </paper-input-decorator>
+   <br>
+   </br>
+  </template>
+  <template id="error">
+   <paper-input-decorator error="error message" floatinglabel="" isinvalid="" label="input">
+    <input is="core-input" value="something">
+    </input>
+   </paper-input-decorator>
+   <br>
+   </br>
+  </template>
+  <template id="auto-validate">
+   <paper-input-decorator autovalidate="" error="input is required">
+    <input is="core-input" required="">
+    </input>
+   </paper-input-decorator>
+   <br>
+   </br>
+  </template>
+  <template id="char-counter">
+   <paper-input-decorator label="character counter">
+    <input is="core-input" maxlength="5">
+     <paper-char-counter class="counter">
+     </paper-char-counter>
+    </input>
+   </paper-input-decorator>
+   <br>
+   </br>
+  </template>
+  <script src="paper-input-decorator.html.0.js">
+  </script>
+ </body>
+</html>
