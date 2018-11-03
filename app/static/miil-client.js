@@ -1,3 +1,5 @@
+import * as Comlink from 'https://cdn.jsdelivr.net/npm/comlinkjs@3/comlink.js'
+
 Polymer('miil-client', {
   ready: function() {
     g = this.shadowRoot.querySelector("griddle-cards");
@@ -16,6 +18,19 @@ const clearCache = async key => {
 const getRegistration = async () => {
   const {serviceWorker} = navigator
   return serviceWorker && serviceWorker.getRegistration('/')
+}
+
+window.cacheMiilImages = async urls => {
+  const {serviceWorker} = navigator
+  const {port1, port2} = new MessageChannel()
+  const msg = {
+    task: 'cache-miil-images',
+    urls,
+    port: port1
+  }
+  serviceWorker.controller.postMessage(msg, [port1])
+  const swProxy = Comlink.proxy(port2)
+  return swProxy.res
 }
 
 const enableServiceWorker = () => {
