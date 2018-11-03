@@ -4,15 +4,24 @@ importScripts('https://cdn.jsdelivr.net/npm/comlinkjs@3/umd/comlink.js')
 self.addEventListener('install', () => self.skipWaiting())
 self.addEventListener('activate', () => self.clients.claim())
 
-self.addEventListener('message', event => {
+self.addEventListener('message', async event => {
   const {task, port} = event.data
+  let res
   switch (task) {
     case 'cache-miil-images': {
-      Comlink.expose({urls: 'oooo'}, port)
-      return
+      const {urls} = event.data
+      res = await cacheMiilImages(urls)
     }
   }
+  Comlink.expose({res}, port)
 })
+
+const cacheMiilImages = async urls => {
+  if (urls.length === 0) return null
+  const cache = await caches.open('miil-images')
+  await cache.addAll(urls)
+  return urls
+}
 
 const cacheResponse = async (key, url, res) => {
   const cache = await caches.open(key)

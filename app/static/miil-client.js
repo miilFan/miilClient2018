@@ -30,9 +30,7 @@ window.cacheMiilImages = async urls => {
   }
   serviceWorker.controller.postMessage(msg, [port1])
   const swProxy = Comlink.proxy(port2)
-  // https://gyazo.com/e93cdd776bd01412bcb913cf713fa7ff
-  console.log(await swProxy)
-  console.log(await swProxy.urls)
+  return swProxy.res
 }
 
 const enableServiceWorker = () => {
