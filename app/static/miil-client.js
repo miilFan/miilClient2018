@@ -20,6 +20,21 @@ const getRegistration = async () => {
   return serviceWorker && serviceWorker.getRegistration('/')
 }
 
+window.cacheMiilImages = async urls => {
+  const {serviceWorker} = navigator
+  const {port1, port2} = new MessageChannel()
+  const msg = {
+    task: 'cache-miil-images',
+    urls: [],
+    port: port1
+  }
+  serviceWorker.controller.postMessage(msg, [port1])
+  const swProxy = Comlink.proxy(port2)
+  // https://gyazo.com/e93cdd776bd01412bcb913cf713fa7ff
+  console.log(await swProxy)
+  console.log(await swProxy.urls)
+}
+
 const enableServiceWorker = () => {
   const {serviceWorker} = navigator
   if (!serviceWorker) return
