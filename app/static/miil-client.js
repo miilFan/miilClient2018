@@ -25,7 +25,7 @@ window.cacheMiilImages = async urls => {
   const {port1, port2} = new MessageChannel()
   const msg = {
     task: 'cache-miil-images',
-    urls: [],
+    urls,
     port: port1
   }
   serviceWorker.controller.postMessage(msg, [port1])

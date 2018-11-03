@@ -11,16 +11,33 @@ self.addEventListener('message', async event => {
     case 'cache-miil-images': {
       const {urls} = event.data
       res = await cacheMiilImages(urls)
+      console.log('(new)', task, res)
     }
   }
   Comlink.expose({res}, port)
 })
 
+const NO_CORS_HOSTS = [
+  'images.miil.me'
+]
+
+const NOT_AUTO_UPDATE_HOSTS = [
+  'images.miil.me'
+]
+
 const cacheMiilImages = async urls => {
   if (urls.length === 0) return null
   const cache = await caches.open('miil-images')
-  await cache.addAll(urls)
-  return urls
+  const newCachedUrls = []
+  for (let url of urls) {
+    url = url.split('?').shift()
+    if (await cache.match(url)) continue
+
+    const res = await fetch(url, {mode: 'no-cors'})
+    await cache.put(url, res)
+    newCachedUrls.push(url)
+  }
+  return newCachedUrls
 }
 
 const cacheResponse = async (key, url, res) => {
@@ -30,8 +47,14 @@ const cacheResponse = async (key, url, res) => {
 
 const fetchAndupdateCache = async (key, url) => {
   if (!navigator.onLine) return
-  const res = await fetch(url)
-  cacheResponse(key, url, res.clone())
+  const {host} = new URL(url)
+  const options = {}
+  if (NO_CORS_HOSTS.includes(host)) options.mode = 'no-cors'
+  const res = await fetch(url, options)
+
+  if (!NOT_AUTO_UPDATE_HOSTS.includes(host)) {
+    cacheResponse(key, url, res.clone())
+  }
   return res
 }
 
@@ -51,7 +74,7 @@ const respondCacheFirst = async (key, url) => {
 
 self.addEventListener('fetch', event => {
   const req = event.request
-  const {pathname, host} = new URL(req.url)
+  const {pathname, origin, host} = new URL(req.url)
   if (req.method !== 'GET') {
     // fall back to network
     return
@@ -60,12 +83,17 @@ self.addEventListener('fetch', event => {
   event.respondWith(async function () {
     // Single Page Request
     if (pathname === '/') {
-      return respondCacheFirst('assets', '/index.html')
+      return respondCacheFirst('assets', `${origin}/index.html`)
     }
 
     // assets
     if (pathname.startsWith('/static/') || host.indexOf('cdn.') >= 0) {
       return respondCacheFirst('assets', req.url)
+    }
+
+    // my miil images
+    if (host === 'images.miil.me') {
+      return respondCacheFirst('miil-images', req.url)
     }
 
     // from network
