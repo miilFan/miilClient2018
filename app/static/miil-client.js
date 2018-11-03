@@ -1,3 +1,5 @@
+import * as Comlink from 'https://cdn.jsdelivr.net/npm/comlinkjs@3/comlink.js'
+
 Polymer('miil-client', {
   ready: function() {
     g = this.shadowRoot.querySelector("griddle-cards");

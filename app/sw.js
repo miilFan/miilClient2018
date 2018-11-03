@@ -1,4 +1,6 @@
 
+importScripts('https://cdn.jsdelivr.net/npm/comlinkjs@3/umd/comlink.js')
+
 self.addEventListener('install', () => self.skipWaiting())
 self.addEventListener('activate', () => self.clients.claim())
 
@@ -30,11 +32,11 @@ const respondCacheFirst = async (key, url) => {
 
 self.addEventListener('fetch', event => {
   const req = event.request
+  const {pathname, host} = new URL(req.url)
   if (req.method !== 'GET') {
     // fall back to network
     return
   }
-  const {pathname} = new URL(req.url)
 
   event.respondWith(async function () {
     // Single Page Request
@@ -43,7 +45,7 @@ self.addEventListener('fetch', event => {
     }
 
     // assets
-    if (pathname.startsWith('/static/')) {
+    if (pathname.startsWith('/static/') || host.indexOf('cdn.') >= 0) {
       return respondCacheFirst('assets', req.url)
     }
 
