@@ -23,15 +23,17 @@ getMiilPhotos_miiluser = {
   },
 
   /* 画像リストを取得するための関数 */
-  getPhotoURL: function(url) {
+  getPhotoURL: function (url) {
+    const isMyPhoto = /\/\/api\.miil\.me\/api\/users\//.test(url)
     url = url.replace(/^http:/, 'https:');
     $.ajax({
       type: 'GET',
       url: url,
       dataType: 'jsonp',
       success: function (res) {
-        var photos = res.photos;
-        var items = getMiilPhotos_miiluser.miil_items;
+        const photos = res.photos;
+        const items = getMiilPhotos_miiluser.miil_items;
+        const photoUrls = []
         /* 受け取った写真データを保持する */
         for(var i = 0; i < photos.length; i++) {
           var photo = photos[i];
@@ -41,6 +43,7 @@ getMiilPhotos_miiluser = {
           item.title = photo.title;
           //item.received = photo;
           items.push(item);
+          photoUrls.push(photo.url)
         }
         /* 次ページの情報を更新する */
         var next_url = res.next_url;
@@ -49,7 +52,9 @@ getMiilPhotos_miiluser = {
         if (next_url) {
           getMiilPhotos_miiluser.given_next_pg = next_url.replace('.?', '?');
         }
-        getMiilPhotos_miiluser.callback();
+
+        if (isMyPhoto) window.cacheMiilImages(photoUrls)
+        getMiilPhotos_miiluser.callback()
       }
     });
   },
@@ -63,7 +68,7 @@ getMiilPhotos_miiluser = {
     if(initflag == 1) this.nextpg = 0;
     this.miil_items = [];
     var url = this.baseURL(category);
-    if(this.nextpg > 0) url = this.given_next_pg;
+    if (this.nextpg > 0) url = this.given_next_pg;
     this.getPhotoURL(url);
   }
 };
