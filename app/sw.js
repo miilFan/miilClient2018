@@ -18,11 +18,17 @@ self.addEventListener('message', async event => {
 })
 
 const NO_CORS_HOSTS = [
+  'images.miil.me',
+  'fonts.googleapis.com',
+]
+
+const IGNORE_URL_QUERY_HOST = [
   'images.miil.me'
 ]
 
 const NOT_AUTO_UPDATE_HOSTS = [
-  'images.miil.me'
+  'images.miil.me',
+  'fonts.googleapis.com'
 ]
 
 const cacheMiilImages = async urls => {
@@ -59,7 +65,10 @@ const fetchAndupdateCache = async (key, url) => {
 }
 
 const respondCacheFirst = async (key, url) => {
-  url = url.split('?').shift()
+  const {host} = new URL(url)
+  if (IGNORE_URL_QUERY_HOST.includes(host)) {
+    url = url.split('?').shift()
+  }
   const cache = await caches.open(key)
   const res = await cache.match(url)
   if (res) {
@@ -87,7 +96,8 @@ self.addEventListener('fetch', event => {
     }
 
     // assets
-    if (pathname.startsWith('/static/') || host.indexOf('cdn.') >= 0) {
+    if (pathname.startsWith('/static/')
+      || host.indexOf('cdn.') >= 0 || host.indexOf('fonts.') >= 0) {
       return respondCacheFirst('assets', req.url)
     }
 

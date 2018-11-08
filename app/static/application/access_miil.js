@@ -4,7 +4,7 @@
 getMiilPhotos_miiluser = {
   callback: function(){},
   given_next_pg: '',
-  user: 'daiz',
+  user: '',
   nextpg: 0,
   page: '?page=',
   miil_items: [],

@@ -4,6 +4,11 @@ html, body {
   background-color: #e9e7e4;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
+.body {
+  padding-top: 3px;
+}
+
 miil-client {
   height: 100vh;
 }

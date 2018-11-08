@@ -1,10 +1,9 @@
-// グローバルタグ
-var g = ''; // <griddle-cards>
-var m = ''; // <miil-viewer>
-var ms = ''; // <miil-viewer>.shadowRoot
+const g = griddlesStreams // <griddle-cards>
+const m = '' // <miil-viewer>
+const ms = document // <miil-viewer>.shadowRoot
 
-var clear_flag = 1;
-var spinner = {
+let clear_flag = 1
+const spinner = {
   open: function() {
     // ms.getElementById('fab').icon = 'cloud-download'
     ms.getElementById('fab').style.display = 'none'
@@ -15,7 +14,19 @@ var spinner = {
     ms.getElementById('fab').style.display = 'block'
     setFabColor()
   }
-};
+}
+
+const formatItems = data => {
+  const items = []
+  for (const entry of data) {
+    items.push({
+      card: { type: 'link', value: entry.dataset.page },
+      body: { type: 'text', value: entry.text[0] },
+      photo: { type: 'image', value: entry.src }
+    })
+  }
+  return items
+}
 
 // ミイルの写真を表示する（ミイルアクセス・お気に入り共通仕様）
 function showMillPhotos(favs) {
@@ -37,10 +48,10 @@ function showMillPhotos(favs) {
 
   if(clear_flag == 1) {
     setStreamSize();
-    g.clearStreams();
+    g.ClearStreams();
   }
 
-  g.setCards(cards);
+  g.Enqueue(...formatItems(cards));
 }
 
 // サイズの設定
@@ -53,10 +64,12 @@ function setStreamSize() {
 }
 
 // アプリのバージョンフォトを表示する
-function showReleases() {
-  var cards = release_blog_entries;
-  g.clearStreams();
-  g.setCards(cards);
+function showReleases () {
+  const entries = release_blog_entries
+  g.ClearStreams();
+  // g.setCards(cards);
+  const items = formatItems(entries)
+  griddlesStreams.Enqueue(...items)
 }
 
 // カードがクリックされたときの挙動
@@ -86,6 +99,14 @@ window.addEventListener("griddle-cards-ready", function() {
   constructCategories();
   console.log("griddle-cards-ready");
 }, false);
+
+// XXX: readyEvent
+window.addEventListener('load', event => {
+  setEvents()
+  // initSettingUI()
+  showReleases()
+  // constructCategories()
+}, false)
 
 // 画像をヘッダとして採用する
 function changeHeadImg(photo) {
@@ -175,141 +196,142 @@ function isMiilPg(url) {
 }
 
 // window event listeners:
-function setEvents() {
-ms.addEventListener("click", function(e) {
-  var id = (e.target.id).split("_")[0];
-  var ex = (e.target.id).split("_")[1];
-
-  if(id == "releaseBlog") {
-    clear_flag = 1;
-    showReleases();
-  }
-
-  if (id == "fab") {
-    spinner.open()
-    var username = ''
+function setEvents () {
+  scrollHeaderPanel.addEventListener('scrollend', () => {
+    if (!g.IsQueueEmpty() || getMiilPhotos_miiluser.user === '') return
+    // spinner.open()
     clear_flag = 0
-    getMiilPhotos_miiluser.main(-1, 0, username, showMillPhotos);
-  }
+    getMiilPhotos_miiluser.main(-1, 0, '', showMillPhotos)
+  }, false)
 
-  if(id == "toggleTags") {
-    slideToggle("stage_category");
-  }
+  ms.addEventListener("click", function(e) {
+    var id = (e.target.id).split("_")[0];
+    var ex = (e.target.id).split("_")[1];
 
-  if(id == "category") {
-    spinner.open();
-    slideUp("stage_category");
-    clear_flag = 1;
-    getMiilPhotos_miiluser.main(ex, 1, "",  showMillPhotos);
-  }
-
-  if(id == "settings") {
-    slideDown("stage_settings");
-  }
-
-  if(id == "dsettings") {
-    slideUp("stage_settings");
-  }
-
-  if(id == "reguser") {
-    var name = ms.getElementById("input_username").value;
-    var name = name.replace(" ", "");
-    if(name != undefined && name != "") {
-      setUsername(name);
+    if(id == "releaseBlog") {
+      clear_flag = 1;
+      showReleases();
     }
-  }
 
-  if(id == "export") {
-    exportV2FavData(0);
-  }
+    if (id == "fab") {}
 
-  if(id == "btnImport") {
-    var code = ms.getElementById("input_import").value;
-    if(code != undefined && code != "") {
-      importV2FavData(code);
+    if(id == "toggleTags") {
+      slideToggle("stage_category");
     }
-  }
 
-  if(id == "btnDelete") {
-    exportV2FavData(1);
-  }
-
-  // favs
-  if(id == "toggleFavs") {
-    slideToggle("stage_favs");
-  }
-
-  if(id == "favcancel") {
-    slideUp("stage_favs");
-  }
-
-  if(id == "listup") {
-    slideUp("stage_category");
-    spinner.open();
-    listupFavs();
-  }
-
-  if(id == "add") {
-    var miil_pg_url = ms.querySelector("#fav_input").value;
-    var is_valid_miil_pg = isMiilPg(miil_pg_url);
-    if(is_valid_miil_pg == 1) {
-      addFav(miil_pg_url);
+    if(id == "category") {
+      spinner.open();
+      slideUp("stage_category");
+      clear_flag = 1;
+      getMiilPhotos_miiluser.main(ex, 1, "",  showMillPhotos);
     }
-  }
 
-  // settings
-  if(id == "settingsTitle") {
-    var cn = e.target.className;
-    var role = 1;
-    if(cn == "check") {
-      ms.getElementById(id).className = "checkbox";
-      ms.getElementById(id).icon = "check-box-outline-blank";
-      role = 0; // off
-    }else {
-      ms.getElementById(id).className = "check";
-      ms.getElementById(id).icon = "check";
-      role = 1; // on
+    if(id == "settings") {
+      slideDown("stage_settings");
     }
-    setVisibleTitle(role);
-  }
 
-  if(id == "settingsBigphoto") {
-    var cn = e.target.className;
-    var role = 1;
-    if(cn == "check") {
-      ms.getElementById(id).className = "checkbox";
-      ms.getElementById(id).icon = "check-box-outline-blank";
-      role = 0; // off
-    }else {
-      ms.getElementById(id).className = "check";
-      ms.getElementById(id).icon = "check";
-      role = 1; // on
+    if(id == "dsettings") {
+      slideUp("stage_settings");
     }
-    setShowBigPhoto(role);
-  }
 
-  // 指定したユーザーが投稿した写真を表示する
-  if(id == "showMyPost") {
-    spinner.open();
-    var username = '';
-    clear_flag = 1;
-    getMiilPhotos_miiluser.main(-1, 1, username, showMillPhotos);
-  }
-  if(id == "showMiilmePost") {
-    spinner.open();
-    var username = 'miilme';
-    clear_flag = 1;
-    getMiilPhotos_miiluser.main(-1, 1, username, showMillPhotos);
-  }
+    if(id == "reguser") {
+      var name = ms.getElementById("input_username").value;
+      var name = name.replace(" ", "");
+      if(name != undefined && name != "") {
+        setUsername(name);
+      }
+    }
 
-  // 古いバージョンのデータレスキュー
-  if(id == "getPrevData") {
-    rescuePrevData();
-  }
+    if(id == "export") {
+      exportV2FavData(0);
+    }
 
-  // about
-  if(id == "about") {
-    slideToggle("stage_about");
-  }
-}, false);
+    if(id == "btnImport") {
+      var code = ms.getElementById("input_import").value;
+      if(code != undefined && code != "") {
+        importV2FavData(code);
+      }
+    }
+
+    if(id == "btnDelete") {
+      exportV2FavData(1);
+    }
+
+    // favs
+    if(id == "toggleFavs") {
+      slideToggle("stage_favs");
+    }
+
+    if(id == "favcancel") {
+      slideUp("stage_favs");
+    }
+
+    if(id == "listup") {
+      slideUp("stage_category");
+      spinner.open();
+      listupFavs();
+    }
+
+    if(id == "add") {
+      var miil_pg_url = ms.querySelector("#fav_input").value;
+      var is_valid_miil_pg = isMiilPg(miil_pg_url);
+      if(is_valid_miil_pg == 1) {
+        addFav(miil_pg_url);
+      }
+    }
+
+    // settings
+    if(id == "settingsTitle") {
+      var cn = e.target.className;
+      var role = 1;
+      if(cn == "check") {
+        ms.getElementById(id).className = "checkbox";
+        ms.getElementById(id).icon = "check-box-outline-blank";
+        role = 0; // off
+      }else {
+        ms.getElementById(id).className = "check";
+        ms.getElementById(id).icon = "check";
+        role = 1; // on
+      }
+      setVisibleTitle(role);
+    }
+
+    if(id == "settingsBigphoto") {
+      var cn = e.target.className;
+      var role = 1;
+      if(cn == "check") {
+        ms.getElementById(id).className = "checkbox";
+        ms.getElementById(id).icon = "check-box-outline-blank";
+        role = 0; // off
+      }else {
+        ms.getElementById(id).className = "check";
+        ms.getElementById(id).icon = "check";
+        role = 1; // on
+      }
+      setShowBigPhoto(role);
+    }
+
+    // 指定したユーザーが投稿した写真を表示する
+    if(id == "showMyPost") {
+      // spinner.open()
+      clear_flag = 1
+      getMiilPhotos_miiluser.main(-1, 1, 'daiz', showMillPhotos)
+    }
+    if(id == "showMiilmePost") {
+      spinner.open();
+      var username = 'miilme';
+      clear_flag = 1;
+      getMiilPhotos_miiluser.main(-1, 1, username, showMillPhotos);
+    }
+
+    // 古いバージョンのデータレスキュー
+    if(id == "getPrevData") {
+      rescuePrevData();
+    }
+
+    // about
+    if(id == "about") {
+      slideToggle("stage_about");
+    }
+  }, false)
 }

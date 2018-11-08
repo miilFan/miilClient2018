@@ -1,12 +1,12 @@
 import * as Comlink from 'https://cdn.jsdelivr.net/npm/comlinkjs@3/comlink.js'
 
-Polymer('miil-client', {
-  ready: function() {
-    g = this.shadowRoot.querySelector("griddle-cards");
-    m = this;
-    ms = this.shadowRoot;
-  }
-});
+// Polymer('miil-client', {
+//   ready: function() {
+//     g = this.shadowRoot.querySelector("griddle-cards");
+//     m = this;
+//     ms = this.shadowRoot;
+//   }
+// });
 
 const clearCache = async key => {
   const keys = await caches.keys()
@@ -44,7 +44,7 @@ const enableServiceWorker = () => {
     await clearCache('assets')
   })
 
-  if (getRegistration()) return
+  // if (getRegistration()) return
   serviceWorker.register('/sw.js', {scope: '/'})
 }
 
