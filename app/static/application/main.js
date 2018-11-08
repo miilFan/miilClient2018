@@ -21,7 +21,7 @@ const formatItems = data => {
   for (const entry of data) {
     items.push({
       card: { type: 'link', value: entry.dataset.page },
-      body: { type: 'text', value: entry.text[0] },
+      body: { type: 'text', value: entry.text[0].replace(/\n/g, '') },
       photo: { type: 'image', value: entry.src }
     })
   }
@@ -66,10 +66,11 @@ function setStreamSize() {
 // アプリのバージョンフォトを表示する
 function showReleases () {
   const entries = release_blog_entries
-  g.ClearStreams();
-  // g.setCards(cards);
+  g.ClearStreams()
   const items = formatItems(entries)
   griddlesStreams.Enqueue(...items)
+  const r = Math.floor(Math.random() * (entries.length))
+  changeHeadImg(entries[r].src)
 }
 
 // カードがクリックされたときの挙動
@@ -109,10 +110,11 @@ window.addEventListener('load', event => {
 }, false)
 
 // 画像をヘッダとして採用する
-function changeHeadImg(photo) {
-  const cshp = ms.querySelector("core-scroll-header-panel").shadowRoot
-  cshp.querySelector("#headerBg").style.backgroundImage = `url(${photo})`
-  cshp.querySelector("#condensedHeaderBg").style.backgroundColor = '#312319'
+function changeHeadImg (srcUrl) {
+  scrollHeaderPanel.SetPanelImage(srcUrl)
+  // const cshp = ms.querySelector("core-scroll-header-panel").shadowRoot
+  // cshp.querySelector("#headerBg").style.backgroundImage = `url(${photo})`
+  // cshp.querySelector("#condensedHeaderBg").style.backgroundColor = '#312319'
 }
 
 // アプリのスタイルをランダムに決める
@@ -318,10 +320,8 @@ function setEvents () {
       getMiilPhotos_miiluser.main(-1, 1, 'daiz', showMillPhotos)
     }
     if(id == "showMiilmePost") {
-      spinner.open();
-      var username = 'miilme';
-      clear_flag = 1;
-      getMiilPhotos_miiluser.main(-1, 1, username, showMillPhotos);
+      clear_flag = 1
+      getMiilPhotos_miiluser.main(-1, 1, 'miilme', showMillPhotos)
     }
 
     // 古いバージョンのデータレスキュー

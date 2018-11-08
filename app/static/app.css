@@ -9,6 +9,10 @@ html, body {
   padding-top: 3px;
 }
 
-miil-client {
-  height: 100vh;
+.material-icons {
+  color: #eadfc6;
+  margin-right: 16px;
+  margin-left: 6px;
+  margin-top: 8px;
+  cursor: pointer;
 }

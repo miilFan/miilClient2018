@@ -55,6 +55,9 @@ getMiilPhotos_miiluser = {
 
         if (isMyPhoto) window.cacheMiilImages(photoUrls)
         getMiilPhotos_miiluser.callback()
+
+        const r = Math.floor(Math.random() * (photos.length))
+        scrollHeaderPanel.SetPanelImage(photos[r].url)
       }
     });
   },

@@ -2,12 +2,12 @@ class ScrollHeaderPanel extends HTMLElement {
   constructor (...props) {
     super(...props)
     this.panelColor = `#312319`
-    this.titleColor = `rgb(234, 223, 198)`
+    this.titleColor = `#eadfc6`
     this.bodyColor = `#e9e7e4`
     this.headerHeight = 192
     this.titleHeight = 64
     this.iconSrcUrl = `/static/icon.png`
-    this.panelSrcUrl = `/static/assets/0.2.0.jpg`
+    this.panelSrcUrl = ''
     this.solid = false
     // XXX: gradation optionほしい
 
@@ -45,6 +45,7 @@ class ScrollHeaderPanel extends HTMLElement {
           background-size: cover;
           background-position: center center;
           background-image: url(${this.panelSrcUrl});
+          background-color: ${this.panelColor};
           height: ${this.headerHeight}px;
         }
         .header-icon {
@@ -293,6 +294,11 @@ class ScrollHeaderPanel extends HTMLElement {
       threshold: 0.5
     })
     scrollObserver.observe(bottomBar)
+  }
+
+  SetPanelImage (srcUrl) {
+    this.panelSrcUrl = srcUrl
+    this.renderStyle()
   }
 }
 

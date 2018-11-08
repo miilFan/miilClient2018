@@ -19,7 +19,7 @@ self.addEventListener('message', async event => {
 
 const NO_CORS_HOSTS = [
   'images.miil.me',
-  'fonts.googleapis.com',
+  // 'fonts.googleapis.com',
 ]
 
 const IGNORE_URL_QUERY_HOST = [
@@ -28,7 +28,7 @@ const IGNORE_URL_QUERY_HOST = [
 
 const NOT_AUTO_UPDATE_HOSTS = [
   'images.miil.me',
-  'fonts.googleapis.com'
+  // 'fonts.googleapis.com'
 ]
 
 const cacheMiilImages = async urls => {
