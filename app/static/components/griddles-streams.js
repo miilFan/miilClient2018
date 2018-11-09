@@ -6,7 +6,7 @@ class GriddlesStreams extends HTMLElement {
     this.gutter = 10
     this.width = 200
 
-    this.resolvedItems = []
+    this.newResolvedItems = []
     this.queue = []
 
     this.initialize()
@@ -138,7 +138,13 @@ class GriddlesStreams extends HTMLElement {
   }
 
   async solve () {
-    if (this.queue.length === 0) return
+    if (this.queue.length === 0) {
+      const event = new CustomEvent('renderend', {
+        detail: { resolved: this.newResolvedItems.concat() }
+      })
+      this.dispatchEvent(event)
+      return
+    }
     const item = this.queue.shift()
     console.log('>', item)
     const names = Object.keys(item)
@@ -171,7 +177,7 @@ class GriddlesStreams extends HTMLElement {
       }
     }
 
-    this.resolvedItems.push(item)
+    this.newResolvedItems.push(item)
     this.solve()
   }
 
@@ -190,6 +196,7 @@ class GriddlesStreams extends HTMLElement {
   }
 
   async Enqueue (...items) {
+    this.newResolvedItems.length = 0
     this.queue.push(...items)
     await this.solve()
   }

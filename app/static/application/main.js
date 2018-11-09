@@ -201,9 +201,15 @@ function isMiilPg(url) {
 function setEvents () {
   scrollHeaderPanel.addEventListener('scrollend', () => {
     if (!g.IsQueueEmpty() || getMiilPhotos_miiluser.user === '') return
-    // spinner.open()
     clear_flag = 0
     getMiilPhotos_miiluser.main(-1, 0, '', showMillPhotos)
+  }, false)
+
+  griddlesStreams.addEventListener('renderend', event => {
+    console.log('renderend')
+    const {resolved} = event.detail
+    const r = Math.floor(Math.random() * (resolved.length))
+    scrollHeaderPanel.SetPanelImage(resolved[r].photo.value)
   }, false)
 
   ms.addEventListener("click", function(e) {
