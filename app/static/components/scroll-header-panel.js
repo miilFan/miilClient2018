@@ -298,7 +298,8 @@ class ScrollHeaderPanel extends HTMLElement {
 
   SetPanelImage (srcUrl) {
     this.panelSrcUrl = srcUrl
-    this.renderStyle()
+    const header = this.shadowRoot.querySelector('.header')
+    header.style.backgroundImage = `url(${srcUrl})`
   }
 }
 
