@@ -171,7 +171,7 @@ class GriddlesStreams extends HTMLElement {
         case 'image': {
           const res = await this.fetchImage(value, target)
           item[name]._ = res
-          console.log(res.height)
+          // console.log(res.height)
           break
         }
       }

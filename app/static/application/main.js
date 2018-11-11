@@ -189,6 +189,19 @@ function qn(q) {
   return q;
 }
 
+function flatCategories () {
+  const groups = miil_normal
+  const res = []
+  for (const group of groups) {
+    const {name, category_id} = group
+    for (const category of group.categories) {
+      const categoryId = category.category_id
+      res.push(categoryId)
+    }
+  }
+  return res
+}
+
 // ミイルのページであるかどうかを判定する
 function isMiilPg(url) {
   //http://miil.me/g/57lk3
@@ -212,9 +225,9 @@ function setEvents () {
     scrollHeaderPanel.SetPanelImage(resolved[r].photo.value)
   }, false)
 
-  ms.addEventListener("click", function(e) {
-    var id = (e.target.id).split("_")[0];
-    var ex = (e.target.id).split("_")[1];
+  ms.addEventListener("click", function (e) {
+    const id = (e.target.id).split("_")[0];
+    const ex = (e.target.id).split("_")[1];
 
     if(id == "releaseBlog") {
       clear_flag = 1;
@@ -228,8 +241,7 @@ function setEvents () {
     }
 
     if(id == "category") {
-      spinner.open();
-      slideUp("stage_category");
+      // slideUp("stage_category");
       clear_flag = 1;
       getMiilPhotos_miiluser.main(ex, 1, "",  showMillPhotos);
     }
@@ -320,14 +332,22 @@ function setEvents () {
     }
 
     // 指定したユーザーが投稿した写真を表示する
-    if(id == "showMyPost") {
-      // spinner.open()
+    if(id === 'showMyPost') {
       clear_flag = 1
       getMiilPhotos_miiluser.main(-1, 1, 'daiz', showMillPhotos)
     }
-    if(id == "showMiilmePost") {
+
+    if (id === 'showMiilmePost') {
       clear_flag = 1
       getMiilPhotos_miiluser.main(-1, 1, 'miilme', showMillPhotos)
+    }
+
+    if (id === 'random') {
+      clear_flag = 1
+      const categories = flatCategories()
+      const categoryId = categories[Math.floor(Math.random() * categories.length) - 1]
+      console.log('category', categoryId)
+      getMiilPhotos_miiluser.main(categoryId, 1, '', showMillPhotos)
     }
 
     // 古いバージョンのデータレスキュー
