@@ -9,6 +9,40 @@ html, body {
   padding-top: 3px;
 }
 
+.area {
+  position: fixed;
+  top: 70px;
+  width: 92%;
+  background: #FFF;
+  left: 4%;
+  padding: 16px;
+  box-sizing: border-box;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 100;
+}
+
+.cate {
+  color: #4285F4;
+  font-size: 10pt;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0.5em;
+  padding-left: 1px;
+  padding-right: 1px;
+  border-radius: 2px;
+}
+
+.cate:hover{
+  background-color: #D1D1D1;
+}
+
+h2 {
+  color: #333;
+}
+
 .material-icons {
   color: #eadfc6;
   margin-right: 16px;

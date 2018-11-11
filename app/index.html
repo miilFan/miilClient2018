@@ -17,9 +17,8 @@
   <body>
     <scroll-header-panel>
       <div slot='header-menu' style='color: #fff;'>
-        <i class='material-icons' id=''>fastfood</i>
+        <i class='material-icons' id='toggleTags'>fastfood</i>
         <i class='material-icons' id='showMyPost'>account_box</i>
-        <!-- <i class='material-icons' id='showMiilmePost'>photo_filter</i> -->
         <i class='material-icons' id='random'>casino</i>
       </div>
       <span slot='header-title'>miilClient</span>
@@ -58,6 +57,9 @@
         </griddles-streams>
       </div>
     </scroll-header-panel>
+
+    <div id='stage_category' style='display: none;' class='area'>
+    </div>
 
     <script>
       const scrollHeaderPanel = document.querySelector('scroll-header-panel')

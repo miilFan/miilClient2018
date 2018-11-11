@@ -216,6 +216,8 @@ class ScrollHeaderPanel extends HTMLElement {
     } else {
       this.behaviorSolid({titleBar, headerColorPanel})
     }
+
+    this.dispatchEvent(new Event('scroll'))
   }
 
   onScrollEnd () {

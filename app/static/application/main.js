@@ -106,7 +106,7 @@ window.addEventListener('load', event => {
   setEvents()
   // initSettingUI()
   showReleases()
-  // constructCategories()
+  constructCategories()
 }, false)
 
 // 画像をヘッダとして採用する
@@ -141,22 +141,23 @@ function toggleDialog(id) {
 }
 
 // jQuery Toggle
-function slideToggle(id) {
-  var obj = ms.querySelector("#"+id);
-  if(obj.style.display == "block") {
+function slideToggle (id) {
+  const obj = ms.querySelector(`#${id}`)
+  if (obj.style.display !== 'none') {
     slideUp(id);
   }else {
     slideDown(id);
   }
 }
+
 function slideDown(id) {
-  var obj = ms.querySelector("#"+id);
-  $(obj).slideDown();
+  const obj = ms.querySelector(`#${id}`)
+  $(obj).slideDown()
 }
-function slideUp(id) {
-  var obj = ms.querySelector("#"+id);
-  obj.style.display = "none";
-  //$(obj).slideUp(); //なぜか効かない
+
+function slideUp (id) {
+  const obj = ms.querySelector(`#${id}`)
+  $(obj).slideUp()
 }
 
 // categoryパネルを構築する
@@ -171,13 +172,12 @@ function constructCategories() {
     var n = cs[i].name;
     var c = cs[i].category_id;
     s.innerHTML += "<h2>" + n  +"</h2>";
-    for(var j = 0; j < cs[i].categories.length; j++) {
+    for (let j = 0; j < cs[i].categories.length; j++) {
       n = cs[i].categories[j].name;
       c = cs[i].categories[j].category_id;
       n = qn(n); // 個別対応
-      var pb = "<span id='category_{{c}}' role='button' class=cate>{{n}}</span> ";
-          pb = g.getTool().binder(pb, {c: c, n: n});
-      s.innerHTML += pb;
+      const pb = `<span id='category_${c}' role='button' class='cate'>${n}</span> `
+      s.innerHTML += pb
     }
   }
 }
@@ -212,6 +212,12 @@ function isMiilPg(url) {
 
 // window event listeners:
 function setEvents () {
+  scrollHeaderPanel.addEventListener('scroll', () => {
+    const stageCategory = ms.querySelector('#stage_category')
+    if (stageCategory.style.display === 'none') return
+    stageCategory.style.display = 'none'
+  })
+
   scrollHeaderPanel.addEventListener('scrollend', () => {
     if (!g.IsQueueEmpty() || getMiilPhotos_miiluser.user === '') return
     clear_flag = 0
@@ -236,12 +242,12 @@ function setEvents () {
 
     if (id == "fab") {}
 
-    if(id == "toggleTags") {
-      slideToggle("stage_category");
+    if (id == "toggleTags") {
+      slideToggle("stage_category")
     }
 
-    if(id == "category") {
-      // slideUp("stage_category");
+    if (id == 'category') {
+      ms.querySelector(`#stage_category`).style.display = 'none'
       clear_flag = 1;
       getMiilPhotos_miiluser.main(ex, 1, "",  showMillPhotos);
     }
@@ -277,18 +283,12 @@ function setEvents () {
       exportV2FavData(1);
     }
 
-    // favs
-    if(id == "toggleFavs") {
-      slideToggle("stage_favs");
-    }
-
     if(id == "favcancel") {
       slideUp("stage_favs");
     }
 
     if(id == "listup") {
       slideUp("stage_category");
-      spinner.open();
       listupFavs();
     }
 
