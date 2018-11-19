@@ -38,29 +38,16 @@ function showMillPhotos(favs) {
     card.dataset = {};
     card.dataset.page = items[j].page;
     card.dataset.shadowZ = 0;
-    if(items[j].title != '' && app_settings.visibleTitle == 'y') {
-      card.text = [items[j].title, 'block'];
-    }else {
-      card.text = [items[j].title, 'none'];
-    }
+    card.text = [items[j].title, 'block'];
     cards.push(card);
   }
 
   if(clear_flag == 1) {
-    setStreamSize();
+    // setStreamSize();
     g.ClearStreams();
   }
 
   g.Enqueue(...formatItems(cards));
-}
-
-// サイズの設定
-function setStreamSize() {
-  g.column = (app_settings.showBigPhoto == 'y') ? 1 : 2;
-  g.marginLeft = (app_settings.showBigPhoto == 'y') ? 5 : 2;
-  g.marginRight = (app_settings.showBigPhoto == 'y') ? 5 : 2;
-  g.minWidth = (app_settings.showBigPhoto == 'y') ? 500 : 193;
-  g.maxWidth = (app_settings.showBigPhoto == 'y') ? 560 : 560;
 }
 
 // アプリのバージョンフォトを表示する
@@ -95,7 +82,7 @@ window.addEventListener("griddle-cards-end", function() {
 window.addEventListener("griddle-cards-ready", function() {
   setEvents();
   randomStyle();
-  initSettingUI();
+  // initSettingUI();
   showReleases();
   constructCategories();
   console.log("griddle-cards-ready");
@@ -268,29 +255,6 @@ function setEvents () {
       slideUp("stage_settings");
     }
 
-    if(id == "reguser") {
-      var name = ms.getElementById("input_username").value;
-      var name = name.replace(" ", "");
-      if(name != undefined && name != "") {
-        setUsername(name);
-      }
-    }
-
-    if(id == "export") {
-      exportV2FavData(0);
-    }
-
-    if(id == "btnImport") {
-      var code = ms.getElementById("input_import").value;
-      if(code != undefined && code != "") {
-        importV2FavData(code);
-      }
-    }
-
-    if(id == "btnDelete") {
-      exportV2FavData(1);
-    }
-
     if(id == "favcancel") {
       slideUp("stage_favs");
     }
@@ -306,37 +270,6 @@ function setEvents () {
       if(is_valid_miil_pg == 1) {
         addFav(miil_pg_url);
       }
-    }
-
-    // settings
-    if(id == "settingsTitle") {
-      var cn = e.target.className;
-      var role = 1;
-      if(cn == "check") {
-        ms.getElementById(id).className = "checkbox";
-        ms.getElementById(id).icon = "check-box-outline-blank";
-        role = 0; // off
-      }else {
-        ms.getElementById(id).className = "check";
-        ms.getElementById(id).icon = "check";
-        role = 1; // on
-      }
-      setVisibleTitle(role);
-    }
-
-    if(id == "settingsBigphoto") {
-      var cn = e.target.className;
-      var role = 1;
-      if(cn == "check") {
-        ms.getElementById(id).className = "checkbox";
-        ms.getElementById(id).icon = "check-box-outline-blank";
-        role = 0; // off
-      }else {
-        ms.getElementById(id).className = "check";
-        ms.getElementById(id).icon = "check";
-        role = 1; // on
-      }
-      setShowBigPhoto(role);
     }
 
     // 指定したユーザーが投稿した写真を表示する
@@ -356,11 +289,6 @@ function setEvents () {
       const categoryId = categories[Math.floor(Math.random() * categories.length) - 1]
       console.log('category', categoryId)
       getMiilPhotos_miiluser.main(categoryId, 1, '', showMillPhotos)
-    }
-
-    // 古いバージョンのデータレスキュー
-    if(id == "getPrevData") {
-      rescuePrevData();
     }
 
     // about

@@ -24,6 +24,10 @@ getMiilPhotos_miiluser = {
 
   /* 画像リストを取得するための関数 */
   getPhotoURL: function (url) {
+    if (url === undefined) {
+      console.log('url', url)
+      return
+    }
     const isMyPhoto = /\/\/api\.miil\.me\/api\/users\//.test(url)
     url = url.replace(/^http:/, 'https:');
     $.ajax({
@@ -64,7 +68,9 @@ getMiilPhotos_miiluser = {
     this.initflag = initflag;
     this.callback = callback;
     this.user = username;
-    if(this.user == '') this.user = app_settings.userName;
+    if (this.user == '') {
+      this.user = undefined
+    }
     if(initflag == 1) this.nextpg = 0;
     this.miil_items = [];
     var url = this.baseURL(category);
