@@ -198,12 +198,16 @@ function isMiilPg(url) {
   return has_http * has_miilme;
 }
 
+function closeCategories () {
+  const stageCategory = ms.querySelector('#stage_category')
+  if (stageCategory.style.display === 'none') return
+  stageCategory.style.display = 'none'
+}
+
 // window event listeners:
 function setEvents () {
   scrollHeaderPanel.addEventListener('scroll', () => {
-    const stageCategory = ms.querySelector('#stage_category')
-    if (stageCategory.style.display === 'none') return
-    stageCategory.style.display = 'none'
+    closeCategories()
   })
 
   scrollHeaderPanel.addEventListener('scrollend', () => {
@@ -275,11 +279,13 @@ function setEvents () {
     // 指定したユーザーが投稿した写真を表示する
     if(id === 'showMyPost') {
       clear_flag = 1
+      closeCategories()
       getMiilPhotos_miiluser.main(-1, 1, localStorage.username || 'daiz', showMillPhotos)
     }
 
     if (id === 'showMiilmePost') {
       clear_flag = 1
+      closeCategories()
       getMiilPhotos_miiluser.main(-1, 1, 'miilme', showMillPhotos)
     }
 
@@ -288,6 +294,7 @@ function setEvents () {
       const categories = flatCategories()
       const categoryId = categories[Math.floor(Math.random() * categories.length) - 1]
       console.log('category', categoryId)
+      closeCategories()
       getMiilPhotos_miiluser.main(categoryId, 1, '', showMillPhotos)
     }
 
