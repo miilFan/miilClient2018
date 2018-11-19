@@ -166,8 +166,9 @@ function constructCategories() {
   var h = window.innerHeight - 210;
   var s = ms.querySelector("#stage_category");
   s.style.height = h + "px";
-  s.innerHTML += "<h2>お気に入り</h2>";
-  s.innerHTML += "<span id='listup' role='button' class=cate>すべて</span>";
+  s.innerHTML += "<h2>Username</h2>";
+  const username = localStorage.username || ''
+  s.innerHTML += `<input id='username' type='text' value='${username}' placeholder='daiz'>`
   for(var i = 0; i < cs.length; i++) {
     var n = cs[i].name;
     var c = cs[i].category_id;
@@ -229,6 +230,13 @@ function setEvents () {
     const {resolved} = event.detail
     const r = Math.floor(Math.random() * (resolved.length))
     scrollHeaderPanel.SetPanelImage(resolved[r].photo.value)
+  }, false)
+
+  ms.addEventListener('change', event => {
+    const {id, value, placeholder} = event.target
+    if (id === 'username') {
+      localStorage.username = value || placeholder
+    }
   }, false)
 
   ms.addEventListener("click", function (e) {
@@ -334,7 +342,7 @@ function setEvents () {
     // 指定したユーザーが投稿した写真を表示する
     if(id === 'showMyPost') {
       clear_flag = 1
-      getMiilPhotos_miiluser.main(-1, 1, 'daiz', showMillPhotos)
+      getMiilPhotos_miiluser.main(-1, 1, localStorage.username || 'daiz', showMillPhotos)
     }
 
     if (id === 'showMiilmePost') {
