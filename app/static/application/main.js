@@ -19,8 +19,9 @@ const spinner = {
 const formatItems = data => {
   const items = []
   for (const entry of data) {
+    const pageUrl = entry.dataset.page.replace('//miil.me/p/', '//miil.me/g/')
     items.push({
-      card: { type: 'link', value: entry.dataset.page },
+      card: { type: 'link', value: pageUrl },
       body: { type: 'text', value: entry.text[0].replace(/\n/g, '') },
       photo: { type: 'image', value: entry.src }
     })
