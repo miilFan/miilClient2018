@@ -48,7 +48,7 @@
           </template>
           <template slot='card'>
             <div>
-              <a target='_blank' class='card'>
+              <a target='_blank' class='card' onclick='onClickCard(this);'>
                 <img class='photo' />
                 <div class='body'></div>
               </a>
@@ -64,6 +64,10 @@
     <script>
       const scrollHeaderPanel = document.querySelector('scroll-header-panel')
       const griddlesStreams = document.querySelector('griddles-streams')
+      const onClickCard = self => {
+        const srcUrl = self.querySelector('img.photo').src
+        scrollHeaderPanel.SetPanelImage(srcUrl)
+      }
     </script>
     <script src='/static/icon.js'></script>
 
