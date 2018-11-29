@@ -1,10 +1,9 @@
-// グローバルタグ
-var g = ''; // <griddle-cards>
-var m = ''; // <miil-viewer>
-var ms = ''; // <miil-viewer>.shadowRoot
+const g = griddlesStreams // <griddle-cards>
+const m = '' // <miil-viewer>
+const ms = document // <miil-viewer>.shadowRoot
 
-var clear_flag = 1;
-var spinner = {
+let clear_flag = 1
+const spinner = {
   open: function() {
     // ms.getElementById('fab').icon = 'cloud-download'
     ms.getElementById('fab').style.display = 'none'
@@ -15,7 +14,19 @@ var spinner = {
     ms.getElementById('fab').style.display = 'block'
     setFabColor()
   }
-};
+}
+
+const formatItems = data => {
+  const items = []
+  for (const entry of data) {
+    items.push({
+      card: { type: 'link', value: entry.dataset.page },
+      body: { type: 'text', value: entry.text[0].replace(/\n/g, '') },
+      photo: { type: 'image', value: entry.src }
+    })
+  }
+  return items
+}
 
 // ミイルの写真を表示する（ミイルアクセス・お気に入り共通仕様）
 function showMillPhotos(favs) {
@@ -27,36 +38,26 @@ function showMillPhotos(favs) {
     card.dataset = {};
     card.dataset.page = items[j].page;
     card.dataset.shadowZ = 0;
-    if(items[j].title != '' && app_settings.visibleTitle == 'y') {
-      card.text = [items[j].title, 'block'];
-    }else {
-      card.text = [items[j].title, 'none'];
-    }
+    card.text = [items[j].title, 'block'];
     cards.push(card);
   }
 
   if(clear_flag == 1) {
-    setStreamSize();
-    g.clearStreams();
+    // setStreamSize();
+    g.ClearStreams();
   }
 
-  g.setCards(cards);
-}
-
-// サイズの設定
-function setStreamSize() {
-  g.column = (app_settings.showBigPhoto == 'y') ? 1 : 2;
-  g.marginLeft = (app_settings.showBigPhoto == 'y') ? 5 : 2;
-  g.marginRight = (app_settings.showBigPhoto == 'y') ? 5 : 2;
-  g.minWidth = (app_settings.showBigPhoto == 'y') ? 500 : 193;
-  g.maxWidth = (app_settings.showBigPhoto == 'y') ? 560 : 560;
+  g.Enqueue(...formatItems(cards));
 }
 
 // アプリのバージョンフォトを表示する
-function showReleases() {
-  var cards = release_blog_entries;
-  g.clearStreams();
-  g.setCards(cards);
+function showReleases () {
+  const entries = release_blog_entries
+  g.ClearStreams()
+  const items = formatItems(entries)
+  griddlesStreams.Enqueue(...items)
+  const r = Math.floor(Math.random() * (entries.length))
+  changeHeadImg(entries[r].src)
 }
 
 // カードがクリックされたときの挙動
@@ -81,17 +82,26 @@ window.addEventListener("griddle-cards-end", function() {
 window.addEventListener("griddle-cards-ready", function() {
   setEvents();
   randomStyle();
-  initSettingUI();
+  // initSettingUI();
   showReleases();
   constructCategories();
   console.log("griddle-cards-ready");
 }, false);
 
+// XXX: readyEvent
+window.addEventListener('load', event => {
+  setEvents()
+  // initSettingUI()
+  showReleases()
+  constructCategories()
+}, false)
+
 // 画像をヘッダとして採用する
-function changeHeadImg(photo) {
-  const cshp = ms.querySelector("core-scroll-header-panel").shadowRoot
-  cshp.querySelector("#headerBg").style.backgroundImage = `url(${photo})`
-  cshp.querySelector("#condensedHeaderBg").style.backgroundColor = '#312319'
+function changeHeadImg (srcUrl) {
+  scrollHeaderPanel.SetPanelImage(srcUrl)
+  // const cshp = ms.querySelector("core-scroll-header-panel").shadowRoot
+  // cshp.querySelector("#headerBg").style.backgroundImage = `url(${photo})`
+  // cshp.querySelector("#condensedHeaderBg").style.backgroundColor = '#312319'
 }
 
 // アプリのスタイルをランダムに決める
@@ -118,22 +128,23 @@ function toggleDialog(id) {
 }
 
 // jQuery Toggle
-function slideToggle(id) {
-  var obj = ms.querySelector("#"+id);
-  if(obj.style.display == "block") {
+function slideToggle (id) {
+  const obj = ms.querySelector(`#${id}`)
+  if (obj.style.display !== 'none') {
     slideUp(id);
   }else {
     slideDown(id);
   }
 }
+
 function slideDown(id) {
-  var obj = ms.querySelector("#"+id);
-  $(obj).slideDown();
+  const obj = ms.querySelector(`#${id}`)
+  $(obj).slideDown()
 }
-function slideUp(id) {
-  var obj = ms.querySelector("#"+id);
-  obj.style.display = "none";
-  //$(obj).slideUp(); //なぜか効かない
+
+function slideUp (id) {
+  const obj = ms.querySelector(`#${id}`)
+  $(obj).slideUp()
 }
 
 // categoryパネルを構築する
@@ -142,19 +153,19 @@ function constructCategories() {
   var h = window.innerHeight - 210;
   var s = ms.querySelector("#stage_category");
   s.style.height = h + "px";
-  s.innerHTML += "<h2>お気に入り</h2>";
-  s.innerHTML += "<span id='listup' role='button' class=cate>すべて</span>";
+  s.innerHTML += "<h2>Username</h2>";
+  const username = localStorage.username || ''
+  s.innerHTML += `<input id='username' type='text' value='${username}' placeholder='daiz'>`
   for(var i = 0; i < cs.length; i++) {
     var n = cs[i].name;
     var c = cs[i].category_id;
     s.innerHTML += "<h2>" + n  +"</h2>";
-    for(var j = 0; j < cs[i].categories.length; j++) {
+    for (let j = 0; j < cs[i].categories.length; j++) {
       n = cs[i].categories[j].name;
       c = cs[i].categories[j].category_id;
       n = qn(n); // 個別対応
-      var pb = "<span id='category_{{c}}' role='button' class=cate>{{n}}</span> ";
-          pb = g.getTool().binder(pb, {c: c, n: n});
-      s.innerHTML += pb;
+      const pb = `<span id='category_${c}' role='button' class='cate'>${n}</span> `
+      s.innerHTML += pb
     }
   }
 }
@@ -166,6 +177,19 @@ function qn(q) {
   return q;
 }
 
+function flatCategories () {
+  const groups = miil_normal
+  const res = []
+  for (const group of groups) {
+    const {name, category_id} = group
+    for (const category of group.categories) {
+      const categoryId = category.category_id
+      res.push(categoryId)
+    }
+  }
+  return res
+}
+
 // ミイルのページであるかどうかを判定する
 function isMiilPg(url) {
   //http://miil.me/g/57lk3
@@ -174,142 +198,109 @@ function isMiilPg(url) {
   return has_http * has_miilme;
 }
 
+function closeCategories () {
+  const stageCategory = ms.querySelector('#stage_category')
+  if (stageCategory.style.display === 'none') return
+  stageCategory.style.display = 'none'
+}
+
 // window event listeners:
-function setEvents() {
-ms.addEventListener("click", function(e) {
-  var id = (e.target.id).split("_")[0];
-  var ex = (e.target.id).split("_")[1];
+function setEvents () {
+  scrollHeaderPanel.addEventListener('scroll', () => {
+    closeCategories()
+  })
 
-  if(id == "releaseBlog") {
-    clear_flag = 1;
-    showReleases();
-  }
-
-  if (id == "fab") {
-    spinner.open()
-    var username = ''
+  scrollHeaderPanel.addEventListener('scrollend', () => {
+    if (!g.IsQueueEmpty() || getMiilPhotos_miiluser.user === '') return
     clear_flag = 0
-    getMiilPhotos_miiluser.main(-1, 0, username, showMillPhotos);
-  }
+    getMiilPhotos_miiluser.main(-1, 0, '', showMillPhotos)
+  }, false)
 
-  if(id == "toggleTags") {
-    slideToggle("stage_category");
-  }
+  griddlesStreams.addEventListener('renderend', event => {
+    console.log('renderend')
+    const {resolved} = event.detail
+    const r = Math.floor(Math.random() * (resolved.length))
+    scrollHeaderPanel.SetPanelImage(resolved[r].photo.value)
+  }, false)
 
-  if(id == "category") {
-    spinner.open();
-    slideUp("stage_category");
-    clear_flag = 1;
-    getMiilPhotos_miiluser.main(ex, 1, "",  showMillPhotos);
-  }
-
-  if(id == "settings") {
-    slideDown("stage_settings");
-  }
-
-  if(id == "dsettings") {
-    slideUp("stage_settings");
-  }
-
-  if(id == "reguser") {
-    var name = ms.getElementById("input_username").value;
-    var name = name.replace(" ", "");
-    if(name != undefined && name != "") {
-      setUsername(name);
+  ms.addEventListener('change', event => {
+    const {id, value, placeholder} = event.target
+    if (id === 'username') {
+      localStorage.username = value || placeholder
     }
-  }
+  }, false)
 
-  if(id == "export") {
-    exportV2FavData(0);
-  }
+  ms.addEventListener("click", function (e) {
+    const id = (e.target.id).split("_")[0];
+    const ex = (e.target.id).split("_")[1];
 
-  if(id == "btnImport") {
-    var code = ms.getElementById("input_import").value;
-    if(code != undefined && code != "") {
-      importV2FavData(code);
+    if(id == "releaseBlog") {
+      clear_flag = 1;
+      showReleases();
     }
-  }
 
-  if(id == "btnDelete") {
-    exportV2FavData(1);
-  }
+    if (id == "fab") {}
 
-  // favs
-  if(id == "toggleFavs") {
-    slideToggle("stage_favs");
-  }
-
-  if(id == "favcancel") {
-    slideUp("stage_favs");
-  }
-
-  if(id == "listup") {
-    slideUp("stage_category");
-    spinner.open();
-    listupFavs();
-  }
-
-  if(id == "add") {
-    var miil_pg_url = ms.querySelector("#fav_input").value;
-    var is_valid_miil_pg = isMiilPg(miil_pg_url);
-    if(is_valid_miil_pg == 1) {
-      addFav(miil_pg_url);
+    if (id == "toggleTags") {
+      slideToggle("stage_category")
     }
-  }
 
-  // settings
-  if(id == "settingsTitle") {
-    var cn = e.target.className;
-    var role = 1;
-    if(cn == "check") {
-      ms.getElementById(id).className = "checkbox";
-      ms.getElementById(id).icon = "check-box-outline-blank";
-      role = 0; // off
-    }else {
-      ms.getElementById(id).className = "check";
-      ms.getElementById(id).icon = "check";
-      role = 1; // on
+    if (id == 'category') {
+      ms.querySelector(`#stage_category`).style.display = 'none'
+      clear_flag = 1;
+      getMiilPhotos_miiluser.main(ex, 1, "",  showMillPhotos);
     }
-    setVisibleTitle(role);
-  }
 
-  if(id == "settingsBigphoto") {
-    var cn = e.target.className;
-    var role = 1;
-    if(cn == "check") {
-      ms.getElementById(id).className = "checkbox";
-      ms.getElementById(id).icon = "check-box-outline-blank";
-      role = 0; // off
-    }else {
-      ms.getElementById(id).className = "check";
-      ms.getElementById(id).icon = "check";
-      role = 1; // on
+    if(id == "settings") {
+      slideDown("stage_settings");
     }
-    setShowBigPhoto(role);
-  }
 
-  // 指定したユーザーが投稿した写真を表示する
-  if(id == "showMyPost") {
-    spinner.open();
-    var username = '';
-    clear_flag = 1;
-    getMiilPhotos_miiluser.main(-1, 1, username, showMillPhotos);
-  }
-  if(id == "showMiilmePost") {
-    spinner.open();
-    var username = 'miilme';
-    clear_flag = 1;
-    getMiilPhotos_miiluser.main(-1, 1, username, showMillPhotos);
-  }
+    if(id == "dsettings") {
+      slideUp("stage_settings");
+    }
 
-  // 古いバージョンのデータレスキュー
-  if(id == "getPrevData") {
-    rescuePrevData();
-  }
+    if(id == "favcancel") {
+      slideUp("stage_favs");
+    }
 
-  // about
-  if(id == "about") {
-    slideToggle("stage_about");
-  }
-}, false);
+    if(id == "listup") {
+      slideUp("stage_category");
+      listupFavs();
+    }
+
+    if(id == "add") {
+      var miil_pg_url = ms.querySelector("#fav_input").value;
+      var is_valid_miil_pg = isMiilPg(miil_pg_url);
+      if(is_valid_miil_pg == 1) {
+        addFav(miil_pg_url);
+      }
+    }
+
+    // 指定したユーザーが投稿した写真を表示する
+    if(id === 'showMyPost') {
+      clear_flag = 1
+      closeCategories()
+      getMiilPhotos_miiluser.main(-1, 1, localStorage.username || 'daiz', showMillPhotos)
+    }
+
+    if (id === 'showMiilmePost') {
+      clear_flag = 1
+      closeCategories()
+      getMiilPhotos_miiluser.main(-1, 1, 'miilme', showMillPhotos)
+    }
+
+    if (id === 'random') {
+      clear_flag = 1
+      const categories = flatCategories()
+      const categoryId = categories[Math.floor(Math.random() * categories.length) - 1]
+      console.log('category', categoryId)
+      closeCategories()
+      getMiilPhotos_miiluser.main(categoryId, 1, '', showMillPhotos)
+    }
+
+    // about
+    if(id == "about") {
+      slideToggle("stage_about");
+    }
+  }, false)
 }

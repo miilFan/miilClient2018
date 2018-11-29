@@ -2,28 +2,80 @@
 <html>
   <head>
     <meta charset='utf-8' />
-    <link rel="manifest" href="/manifest.json">
-    <link id="favicon" rel="icon" href="/static/icon.png">
-    <title>miilClient</title>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
     <meta name='mobile-web-app-capable' content='yes'>
     <meta name='apple-mobile-web-app-capable' content='yes'>
-    <meta name='theme-color' content='#312319' />
-    <link rel='shortcut icon' href='/icon.png' type='image/png'>
-    <link rel='apple-touch-icon-precomposed' href='/icon.png'>
-
-    <!-- import polymer elements -->
-    <script src='/static/lib/polymer_components_055/webcomponentsjs/webcomponents.min.js'></script>
-    <link rel='import' href='/static/lib/polymer_components_055/polymer/polymer.html'>
-    <link rel='import' href='/static/miil-client.html' />
-
-    <!-- load scripts and styles for an app -->
+    <title>miilClient</title>
     <script src='/static/lib/jquery.js'></script>
-    <script src='/static/lib/polymer_components_055/appStorage/appStorage.js'></script>
+    <script src='/static/components/scroll-header-panel.js'></script>
+    <script src='/static/components/griddles-streams.js'></script>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' />
+    <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
     <link rel='stylesheet' href='/static/app.css' />
-    </style>
+    <link rel='manifest' href='/manifest.json'>
   </head>
-  <body fullbleed layout vertical>
-    <miil-client></miil-client>
+  <body>
+    <scroll-header-panel>
+      <div slot='header-menu' style='color: #fff;'>
+        <i class='material-icons' id='toggleTags'>fastfood</i>
+        <i class='material-icons' id='showMyPost'>account_box</i>
+        <i class='material-icons' id='random'>casino</i>
+      </div>
+      <span slot='header-title'>miilClient</span>
+      <div class='body' slot='body'>
+        <griddles-streams col=2 gutter=2 width=350>
+          <template slot='card-style'>
+            <style>
+              .card {
+                display: block;
+                min-height: 100px;
+                background-color: #fff;
+                margin-bottom: 4px;
+                font-size: 10pt;
+                cursor: pointer;
+                -webkit-user-select: none;
+                text-decoration: none;
+                color: #111;
+              }
+              .photo {
+                display: block;
+                width: 100%;
+              }
+              .body {
+                padding: 5px;
+              }
+            </style>
+          </template>
+          <template slot='card'>
+            <div>
+              <a target='_blank' class='card' onclick='onClickCard(this);'>
+                <img class='photo' />
+                <div class='body'></div>
+              </a>
+            </div>
+          </template>
+        </griddles-streams>
+      </div>
+    </scroll-header-panel>
+
+    <div id='stage_category' style='display: none;' class='area'>
+    </div>
+
+    <script>
+      const scrollHeaderPanel = document.querySelector('scroll-header-panel')
+      const griddlesStreams = document.querySelector('griddles-streams')
+      const onClickCard = self => {
+        const srcUrl = self.querySelector('img.photo').src
+        scrollHeaderPanel.SetPanelImage(srcUrl)
+      }
+    </script>
+    <script src='/static/icon.js'></script>
+
+    <script src='/static/application/favs.js'></script>
+    <script src='/static/application/miil_category_normal.js'></script>
+    <script src='/static/application/blog_entry.js'></script>
+    <script src='/static/application/access_miil.js'></script>
+    <script src='/static/application/main.js'></script>
+    <script type='module' src='/static/miil-client.js'></script>
   </body>
 </html>
