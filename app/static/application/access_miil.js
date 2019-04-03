@@ -75,9 +75,8 @@ getMiilPhotos_miiluser = {
     let categoryName = null
     for(let i = 0; i < cs.length; i++) {
       for (let j = 0; j < cs[i].categories.length; j++) {
-        let n = cs[i].categories[j].name
-        let c = cs[i].categories[j].category_id
-        n = qn(n)
+        const n = qn(cs[i].categories[j].name)
+        const c = cs[i].categories[j].category_id
         if (c === categoryId) {
           categoryName = n
           break
