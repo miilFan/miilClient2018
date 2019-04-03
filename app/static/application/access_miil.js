@@ -10,9 +10,11 @@ getMiilPhotos_miiluser = {
   miil_items: [],
   initflag: 0,
 
-  baseURL: function(a) {
-    if(a < 0) return "http://api.miil.me/api/users/"+ this.user +"/photos/public";
-    else      return "http://miil.me/api/photos/recent/categories/"+ a;
+  defaultTitle: 'miilClient',
+
+  baseURL: function (categoryId) {
+    if (categoryId < 0) return `http://api.miil.me/api/users/${this.user}/photos/public`
+    return `http://miil.me/api/photos/recent/categories/${categoryId}`
   },
 
   /* 次のページが有効かどうかを判定する */
@@ -63,18 +65,44 @@ getMiilPhotos_miiluser = {
     });
   },
 
+  updateTitle (categoryId) {
+    categoryId = parseInt(categoryId)
+    if (categoryId === null) {
+      document.title = this.defaultTitle
+      return
+    }
+    const cs = miil_normal
+    let categoryName = null
+    for(let i = 0; i < cs.length; i++) {
+      for (let j = 0; j < cs[i].categories.length; j++) {
+        const n = qn(cs[i].categories[j].name)
+        const c = cs[i].categories[j].category_id
+        if (c === categoryId) {
+          categoryName = n
+          break
+        }
+      }
+    }
+    document.title = categoryName || this.defaultTitle
+  },
+
   /* エントリポイント */
   main: function (category, initflag, username, callback) {
     this.initflag = initflag;
     this.callback = callback;
     this.user = username;
-    if (this.user == '') {
+    if (initflag === 1) {
+      this.nextpg = 0
+      this.categoryId = null
+    }
+    if (category > 0) this.categoryId = category
+    if (this.user === '') {
       this.user = undefined
     }
-    if(initflag == 1) this.nextpg = 0;
     this.miil_items = [];
-    var url = this.baseURL(category);
+    let url = this.baseURL(category);
     if (this.nextpg > 0) url = this.given_next_pg;
+    this.updateTitle(this.categoryId)
     this.getPhotoURL(url);
   }
 };
