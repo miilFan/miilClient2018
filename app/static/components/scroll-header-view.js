@@ -176,6 +176,7 @@ class ScrollHeaderView extends HTMLElement {
       const h = posY - this.lastPosYSticky
       header.style.top = `${Math.min(Math.max(-titleHeight, header.offsetTop - h), 0)}px`
     } else if (posY < this.headerHeight + sticky) {
+      // headerのアニメーション中
       header.style.top = `0px`
     }
 
