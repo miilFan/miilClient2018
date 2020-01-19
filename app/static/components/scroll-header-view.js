@@ -151,15 +151,16 @@ class ScrollHeaderView extends HTMLElement {
     header.style.height = `${h}px`
     this.lastPosY = Math.min(Math.max(0, posY), this.headerHeight)
 
-    if (h === titleHeight) {
+    if (h <= titleHeight) {
       titlebar.style.backgroundColor = headerBackgroundColor
     } else {
       titlebar.style.backgroundColor = this.headerBackgroundColorDefault
       if (grad) {
         if (h <= 0 || this.headerHeight <= h) {
           this.grad.style.opacity = 0
-        } else {
-          this.grad.style.opacity = titleHeight / h
+        } else if (posY > 25) {
+          this.grad.style.opacity = (titleHeight / h) - 0.01 * (titleHeight / h)
+          // posY / (headerHeight + titleHeight)
         }
       }
     }
