@@ -53,7 +53,7 @@ class ScrollHeaderView extends HTMLElement {
     t.innerHTML = `
       <style>
         #header {
-          position: relative;
+          position: absolute;
           background: #eee;
           top: 0;
           width: 100%;
