@@ -1,8 +1,13 @@
-scrollHeaderPanel.addEventListener('icon-click', event => {
+scrollHeaderPanel.addEventListener('click-icon', event => {
   const target = event.target
-  if (target.solid) {
-    target.removeAttribute('solid')
-  } else {
-    target.setAttribute('solid', '')
-  }
+  target.scrollContainerTo(0)
+  requestAnimationFrame(() => {
+    if (target.solid) {
+      target.removeAttribute('solid')
+      target.setAttribute('gradation', '')
+    } else {
+      target.setAttribute('solid', '')
+      target.removeAttribute('gradation')
+    }
+  })
 })
