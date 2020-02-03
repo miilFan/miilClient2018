@@ -99,7 +99,7 @@ window.addEventListener('load', event => {
 
 // 画像をヘッダとして採用する
 function changeHeadImg (srcUrl) {
-  scrollHeaderPanel.setHeaderBackgroungImage(srcUrl)
+  scrollHeaderPanel.setHeaderBackgroungImage(getSquareUrl(srcUrl))
   // const cshp = ms.querySelector("core-scroll-header-panel").shadowRoot
   // cshp.querySelector("#headerBg").style.backgroundImage = `url(${photo})`
   // cshp.querySelector("#condensedHeaderBg").style.backgroundColor = '#312319'
@@ -221,7 +221,8 @@ function setEvents () {
     console.log('renderend')
     const {resolved} = event.detail
     const r = Math.floor(Math.random() * (resolved.length))
-    scrollHeaderPanel.setHeaderBackgroungImage(resolved[r].photo.value)
+    const srcUrl = resolved[r].photo.value
+    scrollHeaderPanel.setHeaderBackgroungImage(getSquareUrl(srcUrl))
   }, false)
 
   ms.addEventListener('change', event => {
