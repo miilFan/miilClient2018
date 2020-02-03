@@ -1,3 +1,7 @@
+const isChrome = () => {
+  return /\s+Chrome\//.test(navigator.userAgent)
+}
+
 class ScrollHeaderView extends HTMLElement {
   constructor () {
     super()
@@ -50,6 +54,7 @@ class ScrollHeaderView extends HTMLElement {
       headerHeight = '(var(--header-height-px) + var(--title-height-px))'
       imagePaddingBottom = 'var(--title-height-px)'
     }
+    const headerImageTransition = isChrome() ? 'transition: background-image 0.2s ease-in-out;' : ''
     t.innerHTML = `
       <style>
         #header {
@@ -78,6 +83,7 @@ class ScrollHeaderView extends HTMLElement {
           background-image: var(--header-background-image, none);
           background-size: cover;
           background-position: center center;
+          ${headerImageTransition}
         }
         #menus {
           position: absolute;

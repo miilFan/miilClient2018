@@ -24,7 +24,7 @@
         width: 100%;
         height: 100vh;
         --header-height-px: 192;
-        --header-background-image: url("/static/assets/0.2.0.jpg");
+        /* --header-background-image: url("/static/assets/0.2.0.jpg"); */
         --header-background-color: #312319;
         --title-height-px: 64;
         --menus-height-px: 40;
@@ -113,10 +113,18 @@
     </div>
 
     <script>
+      // XXX: TODO
+      const getSquareUrl = srcUrl => {
+        if (srcUrl.endsWith('/miil.jpg')) srcUrl = srcUrl.replace(/\/miil\.jpg$/, '/miil-square.jpg')
+        return srcUrl
+      }
+    </script>
+
+    <script>
       const scrollHeaderPanel = document.querySelector('scroll-header-view')
       const griddlesStreams = document.querySelector('griddles-streams')
       const onClickCard = self => {
-        const srcUrl = self.querySelector('img.photo').src
+        const srcUrl = getSquareUrl(self.querySelector('img.photo').src)
         scrollHeaderPanel.setHeaderBackgroungImage(srcUrl)
       }
     </script>
