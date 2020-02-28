@@ -1,3 +1,4 @@
+let count = 0
 class GriddlesStreams extends HTMLElement {
   constructor (...props) {
     super(...props)
@@ -154,6 +155,7 @@ class GriddlesStreams extends HTMLElement {
     const t = slot.assignedNodes()[0]
     const card = t.content.cloneNode(true).firstElementChild
     stream.appendChild(card)
+    item.ref = card.querySelector('a')
 
     for (const name of names) {
       const target = card.querySelector(`.${name}`)
@@ -171,10 +173,15 @@ class GriddlesStreams extends HTMLElement {
         case 'image': {
           const res = await this.fetchImage(value, target)
           item[name]._ = res
-          // console.log(res.height)
           break
         }
       }
+    }
+
+    // set focus
+    const fItem = this.newResolvedItems[0]
+    if (fItem && document.activeElement !== this) {
+      requestAnimationFrame(() => { fItem.ref.focus() })
     }
 
     this.newResolvedItems.push(item)
@@ -196,6 +203,8 @@ class GriddlesStreams extends HTMLElement {
   }
 
   async Enqueue (...items) {
+    console.log('> enqueue', count)
+    count++
     this.newResolvedItems.length = 0
     this.queue.push(...items)
     await this.solve()
