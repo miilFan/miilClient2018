@@ -155,6 +155,13 @@ class GriddlesStreams extends HTMLElement {
     const card = t.content.cloneNode(true).firstElementChild
     stream.appendChild(card)
 
+    // set focus
+    item.ref = card
+    if (this.newResolvedItems[0] && document.activeElement !== this.newResolvedItems[0]) {
+      const a = this.newResolvedItems[0].ref.querySelector('a')
+      requestAnimationFrame(() => { a.focus() })
+    }
+
     for (const name of names) {
       const target = card.querySelector(`.${name}`)
       if (!target) continue
