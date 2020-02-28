@@ -13,8 +13,8 @@ getMiilPhotos_miiluser = {
   defaultTitle: 'miilClient',
 
   baseURL: function (categoryId) {
-    if (categoryId < 0) return `http://api.miil.me/api/users/${this.user}/photos/public`
-    return `http://miil.me/api/photos/recent/categories/${categoryId}`
+    if (categoryId < 0) return `https://api.miil.me/api/users/${this.user}/photos/public`
+    return `https://miil.me/api/photos/recent/categories/${categoryId}`
   },
 
   /* 次のページが有効かどうかを判定する */

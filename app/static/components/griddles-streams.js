@@ -1,3 +1,4 @@
+let count = 0
 class GriddlesStreams extends HTMLElement {
   constructor (...props) {
     super(...props)
@@ -203,6 +204,8 @@ class GriddlesStreams extends HTMLElement {
   }
 
   async Enqueue (...items) {
+    console.log('> enqueue', count)
+    count++
     this.newResolvedItems.length = 0
     this.queue.push(...items)
     await this.solve()
