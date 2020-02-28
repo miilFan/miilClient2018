@@ -155,13 +155,7 @@ class GriddlesStreams extends HTMLElement {
     const t = slot.assignedNodes()[0]
     const card = t.content.cloneNode(true).firstElementChild
     stream.appendChild(card)
-
-    // set focus
-    item.ref = card
-    if (this.newResolvedItems[0] && document.activeElement !== this.newResolvedItems[0]) {
-      const a = this.newResolvedItems[0].ref.querySelector('a')
-      requestAnimationFrame(() => { a.focus() })
-    }
+    item.ref = card.querySelector('a')
 
     for (const name of names) {
       const target = card.querySelector(`.${name}`)
@@ -179,10 +173,15 @@ class GriddlesStreams extends HTMLElement {
         case 'image': {
           const res = await this.fetchImage(value, target)
           item[name]._ = res
-          // console.log(res.height)
           break
         }
       }
+    }
+
+    // set focus
+    const fItem = this.newResolvedItems[0]
+    if (fItem && document.activeElement !== this) {
+      requestAnimationFrame(() => { fItem.ref.focus() })
     }
 
     this.newResolvedItems.push(item)
