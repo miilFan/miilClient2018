@@ -8,7 +8,7 @@ $ npm run start
 ```
 Open http://localhost:9007
 
-## Deploy to Heroku
+## DevTips: Deploy to Heroku manually
 ```
 $ git push heroku-miilclient LOCAL_BRANCH_NAME:master
 ```
