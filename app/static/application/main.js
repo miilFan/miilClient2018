@@ -97,7 +97,7 @@ const isiPadPortrait = () => {
 // XXX: readyEvent
 window.addEventListener('load', event => {
   if (isiPadPortrait() && scrollHeaderPanel) {
-    scrollHeaderPanel.style.setProperty('--header-height-px', 400)
+    scrollHeaderPanel.style.setProperty('--header-height-px', 360)
   }
   setEvents()
   // initSettingUI()
