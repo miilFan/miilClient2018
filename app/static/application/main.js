@@ -89,8 +89,16 @@ window.addEventListener("griddle-cards-ready", function() {
   console.log("griddle-cards-ready");
 }, false);
 
+const isiPadPortrait = () => {
+  const isIPad = /iPad|Macintosh/i.test(navigator.userAgent) && 'ontouchend' in document
+  return isIPad && window.orientation === 0
+}
+
 // XXX: readyEvent
 window.addEventListener('load', event => {
+  if (isiPadPortrait() && scrollHeaderPanel) {
+    scrollHeaderPanel.style.setProperty('--header-height-px', 300)
+  }
   setEvents()
   // initSettingUI()
   showReleases()
