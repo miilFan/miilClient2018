@@ -98,8 +98,8 @@ const isiPadPortrait = () => {
 window.addEventListener('load', event => {
   if (isiPadPortrait() && scrollHeaderPanel) {
     scrollHeaderPanel.style.setProperty('--header-height-px', 360)
-    scrollHeaderPanel.style.setProperty('--stream-card-font-size', '13pt')
-    document.body.style.setProperty('--category-font-size', '13pt')
+    scrollHeaderPanel.style.setProperty('--stream-card-font-size', '12pt')
+    document.body.style.setProperty('--category-font-size', '12pt')
   }
   setEvents()
   // initSettingUI()
