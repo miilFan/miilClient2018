@@ -29,7 +29,7 @@ html, body {
 
 .cate {
   color: #4285F4;
-  font-size: 10.5pt;
+  font-size: var(--category-font-size);
   cursor: pointer;
   display: inline-block;
   margin: 0.5em;
